@@ -1,0 +1,3 @@
+Sitede kullanýlan görsellerin kaynaklarý.,
+Sitenin çalýþmasý için lazým olmayan dosyalar. 
+Sunucuya yüklenmesine gerek yok.
