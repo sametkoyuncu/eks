@@ -1,0 +1,22 @@
+@media print {
+  body {
+    background-color: #ffffff;
+    color: black; /* Renk seçeneklerini istediğimiz gibi ayarlayabiliriz. */
+  }
+ 
+  p {
+    color: red;
+  }
+ 
+  h1, h2, h3, h4, h5, h6 {
+    color: yellow;
+  }
+ 
+  .menu,footer,.left-menu,{
+    display: none;
+ /* Yazıcıda gözükmesini istemediğimiz alanlar için display none özelliğini kullana biliriz. */
+  }
+  #yazdirma {
+    display: none;
+  }
+}
