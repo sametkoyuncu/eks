@@ -11,6 +11,7 @@
     
     $tartimsorgu=$db->prepare("SELECT * FROM tartim WHERE kullanici_id=:k_id and hayvan_id=:h_id ORDER BY tartim_tarihi DESC");
 
+    $sosyal_medya_id=NULL;
 
 ?>
 
@@ -32,7 +33,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Hayvanlar</h2>
-                    <div class=" text-right">
+                    <div class="text-right">
                       <a href="hayvan-ekle.php" class="btn btn-round btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Yeni Ekle</a>
                     </div>
                     <div class="clearfix"></div>

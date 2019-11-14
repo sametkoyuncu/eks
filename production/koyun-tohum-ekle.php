@@ -14,10 +14,10 @@
       #$irksorgu->execute();
       #$irkcek=$irksorgu->fetch(PDO::FETCH_ASSOC);
 
-      $koyunsorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=0");
+      $koyunsorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=0 and koyun_durum=1");
       $koyunsorgu->execute();
 
-      $kocsorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=1");
+      $kocsorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=1 and koyun_durum=1");
       $kocsorgu->execute();
 
 ?>

@@ -20,7 +20,7 @@
       $anasorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=0");
       $anasorgu->execute();
 
-      $babasorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=1");
+      $babasorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=1 and koyun_durum=1");
       $babasorgu->execute();
       #$irkcek=$irksorgu->fetch(PDO::FETCH_ASSOC);
 
@@ -145,7 +145,7 @@
                                <option value="">Koyun seçin..</option>
                                <?php 
                                  while ($anacek=$anasorgu->fetch(PDO::FETCH_ASSOC)) { ?>
-                                     <option value="<?php echo $anacek['ana_id']; ?>"><?php echo $anacek['koyun_adi']; ?></option>
+                                     <option value="<?php echo $anacek['koyun_id']; ?>"><?php echo $anacek['koyun_adi']; ?></option>
                                 <?php
                                  } 
                                 ?>
@@ -158,7 +158,7 @@
                                <option value="">Koç seçin..</option>
                                <?php 
                                  while ($babacek=$babasorgu->fetch(PDO::FETCH_ASSOC)) { ?>
-                                     <option value="<?php echo $babacek['baba_id']; ?>"><?php echo $babacek['koyun_adi']; ?></option>
+                                     <option value="<?php echo $babacek['koyun_id']; ?>"><?php echo $babacek['koyun_adi']; ?></option>
                                 <?php
                                  } 
                                 ?>

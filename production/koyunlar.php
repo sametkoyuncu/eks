@@ -134,12 +134,11 @@
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th>İK</th>
+                        <th>İşletme K.</th>
+                          <th>Devlet Küpesi</th>
                           <th>Koyun Adı</th>
                           <th class="col-md-1 col-sm-1">Irk</th>
                           <th class="col-md-1 col-sm-1">Cinsiyet</th>
-                          <th >Canlı Ağırlık</th>
-                          <th class="">Alış Fiyatı</th>
                           <th class="">Nitelik</th>
                           <th></th>
                         </tr>
@@ -150,6 +149,7 @@
                       <?php while ($koyuncek=$koyunsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
                         <tr>
                           <td><?php echo $koyuncek['koyun_kupeno_isletme']; ?></td>
+                          <td><?php echo $koyuncek['koyun_kupeno']; ?></td>
                           <td><?php echo $koyuncek['koyun_adi']; ?></td>
                           <td>
                           <?php 
@@ -169,17 +169,6 @@
                             }
                           ?>
                           </td>
-                          <td>
-                            <?php
-                                  $tartimsorgu->execute(array(
-                                    'k_id' => $kullanici_id,
-                                    'h_id' => $koyuncek['koyun_id']
-                                    ));
-                                  $tartimcek=$tartimsorgu->fetch(PDO::FETCH_ASSOC);
-                                  echo $tartimcek['tartim_kilo']." kg"; 
-                            ?>
-                          </td>
-                          <td class="red"><?php echo $koyuncek['koyun_alisfiyati']." ₺"; ?></td>
                           <td>
                             <?php 
                               if($koyuncek['koyun_nitelik']=='1'){
