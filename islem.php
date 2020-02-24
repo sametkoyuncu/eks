@@ -1287,6 +1287,7 @@
 			koyun_alisfiyati=:alisfiyati,
 			koyun_satisfiyati=:satisfiyati,
 			koyun_durum=:durum,
+			koyun_nitelik=:nitelik,
 			ana_id=:ana,
 			baba_id=:baba,
 			koyun_not=:nott
@@ -1299,6 +1300,7 @@
 			'alisfiyati' => $_POST['koyun_alisfiyati'],
 			'satisfiyati' => $_POST['koyun_satisfiyati'],
 			'durum' => $_POST['koyun_durum'],
+			'nitelik' => $_POST['koyun_nitelik'],
 			'ana' => $_POST['ana_id'],
 			'baba' => $_POST['baba_id'],
 			'nott' => $_POST['koyun_not'],
@@ -1465,16 +1467,16 @@
 	}
 
 	#
-	#inek tohum ayarı - inek tohum sil
+	#koyun tohum ayarı - koyun tohum sil
 	#
-	if(isset($_GET['inektohumsil'])) {
-		if ($_GET['inektohumsil']=="true") {
-			$hayvansil=$db->prepare("DELETE FROM inek_tohum WHERE inek_tohum_id=:id");
-			$sil=$hayvansil->execute(array(
-				'id' => $_GET['inek_tohum_id']
+	if(isset($_GET['koyuntohumsil'])) {
+		if ($_GET['koyuntohumsil']=="true") {
+			$koyuntohumsil=$db->prepare("DELETE FROM koyun_tohum WHERE koyun_tohum_id=:id");
+			$sil=$koyuntohumsil->execute(array(
+				'id' => $_GET['koyun_tohum_id']
 				));
 			
-			$referans_sil="inek_tohum_id_".$_GET['inek_tohum_id'];
+			$referans_sil="koyun_tohum_id_".$_GET['koyun_tohum_id_'];
 
 			$hatirlaticisil=$db->prepare("DELETE FROM hatirlatici WHERE hatirlatici_referans=:ref");
 				$sil2=$hatirlaticisil->execute(array(
@@ -1482,9 +1484,9 @@
 					));
 			if ($sil) {
 
-				header("Location:production/inek-tohum.php?durum=true");
+				header("Location:production/koyun-tohum.php?durum=true");
 			} else {
-				header("Location:production/inek-tohum.php?durum=false");
+				header("Location:production/koyun-tohum.php?durum=false");
 			}
 		}	
 	}	

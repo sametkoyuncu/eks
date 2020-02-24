@@ -14,7 +14,12 @@
 
       $irksorgu=$db->prepare("SELECT * FROM irk_koyun");
       $irksorgu->execute();
-      #$irkcek=$irksorgu->fetch(PDO::FETCH_ASSOC);
+
+      $irkadisorgu=$db->prepare("SELECT * FROM irk_koyun WHERE irk_id=:id");
+      $irkadisorgu->execute(array(
+        'id' => $koyuncek['koyun_irk']
+        ));
+      $irkadicek=$irkadisorgu->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -92,7 +97,7 @@
                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Irk* </label>
                            <div class="col-md-2 col-sm-2 col-xs-12">
                              <select class="select2_group form-control" required="required" name="koyun_irk">
-                               <option value="">Irk seçin..</option>
+                               <option value="<?php echo $koyuncek['koyun_irk']; ?>"><?php echo $irkadicek['irk_adi']; ?></option>
                                <?php 
                                  while ($irkcek=$irksorgu->fetch(PDO::FETCH_ASSOC)) { ?>
                                      <option value="<?php echo $irkcek['irk_id']; ?>"><?php echo $irkcek['irk_adi']; ?></option>
@@ -179,6 +184,12 @@
                                   <option value="1">Damızlık</option>
                                   <option value="2">Adaklık</option>
                                   <option value="3">Kurbanlık</option>
+                                <?php } else { ?>
+                                  <option value="">Bir nitelik seçiniz..</option>
+                                  <option value="1">Damızlık</option>
+                                  <option value="2">Adaklık</option>
+                                  <option value="3">Kurbanlık</option>
+                                  <option value="4">Kasaplık</option>
                                 <?php } ?>
                             </select>
                           </div>
