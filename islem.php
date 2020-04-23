@@ -1415,20 +1415,22 @@
 	}
 
 	#
-	#inek tohum ayarı - inek tohum güncelle
+	#koyu tohum ayarı - koyun tohum güncelle
 	#
-	if (isset($_POST['inektohumguncelle'])) {
+	if (isset($_POST['koyuntohumguncelle'])) {
 
-		$inektohumguncelle=$db->prepare("UPDATE inek_tohum SET
-			inek_tohum_irk=:irk,
-			hayvan_tohumtarihi=:tohumtarihi,
-			inek_tohum_not=:aciklama
-			WHERE inek_tohum_id=:id");
-		$guncelle=$inektohumguncelle->execute(array(
-			'irk' => $_POST['inek_tohum_irk'],
-			'tohumtarihi' => $_POST['hayvan_tohumtarihi'],
-			'aciklama' => $_POST['inek_tohum_not'],
-			'id' => $_POST['inek_tohum_id']
+		$inektohumgukoyuntohumguncellencelle=$db->prepare("UPDATE koyun_tohum SET
+			koyun_asim_koc=:koc,			
+			koyun_kayittarihi=:kayittarihi,
+			koyun_tohumtarihi=:tohumtarihi,
+			koyun_tohum_not=:aciklama
+			WHERE koyun_tohum_id=:id");
+		$guncelle=$koyuntohumguncelle->execute(array(
+			'koc' => $_POST['koyun_asim_koc'],
+			'tohumtarihi' => $_POST['koyun_tohumtarihi'],
+			'kayittarihi' => $_POST['koyun_kayittarihi'],
+			'aciklama' => $_POST['koyun_tohum_not'],
+			'id' => $_POST['koyun_tohum_id']
 			));
 
 		$inek_tohum_id=$_POST['inek_tohum_id'];
