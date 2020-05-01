@@ -86,18 +86,18 @@
                          <div class="col-md-2 col-sm-2 col-xs-12">
                            <input type="text" id="first-name" name="koyun_adi" class="form-control col-md-7 col-xs-12" placeholder="Karagöz, Çiçek gibi..">
                          </div>
-                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Bölme* </label>
+                         <!--<label class="control-label col-md-2 col-sm-2 col-xs-12">Bölme* </label>
                            <div class="col-md-2 col-sm-2 col-xs-12">
                              <select class="select2_group form-control" required="required" name="koyun_padok">
                                <option value="">Bölme seçin..</option>
                                <?php 
-                                 while ($padokcek=$padoksorgu->fetch(PDO::FETCH_ASSOC)) { ?>
-                                     <option value="<?php echo $padokcek['padok_id']; ?>"><?php echo $padokcek['padok_adi']; ?> (<?php echo $padokcek['padok_aciklama']; ?>) </option>
+                                 #while ($padokcek=$padoksorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                                     <option value="<?php #echo $padokcek['padok_id']; ?>"><?php #echo $padokcek['padok_adi']; ?> (<?php #echo $padokcek['padok_aciklama']; ?>) </option>
                                 <?php
-                                 } 
+                                 #} 
                                 ?>
                              </select>
-                           </div>
+                           </div>-->
                        </div>
                        <div class="form-group">
                             <!--
@@ -126,7 +126,7 @@
                                 #if($koyuncek['koyun_cinsiyet']=='1') { ?>
                                   <!--<option value="1">Erkek</option>
                                   <option value="0">Dişi</option>-->
-                                <?php# } else { ?> 
+                                <?php # } else { ?> 
                                   <option value="1">Erkek</option>
                                   <option value="0">Dişi</option>
                                 <?php #} ?>

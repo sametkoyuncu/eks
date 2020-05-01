@@ -118,7 +118,7 @@
                                 #if($koyuncek['koyun_cinsiyet']=='1') { ?>
                                   <!--<option value="1">Erkek</option>
                                   <option value="0">Dişi</option>-->
-                                <?php# } else { ?> 
+                                <?php # } else { ?> 
                                   <option value="1">Erkek</option>
                                   <option value="0">Dişi</option>
                                 <?php #} ?>
@@ -126,10 +126,18 @@
                           </div>
                       </div>
                       <div class="form-group">
-                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Canlı Ağırlık 
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kardeş Sayısı* 
                          </label>
                          <div class="col-md-2 col-sm-2 col-xs-12">
-                           <input type="text" id="first-name" name="koyun_kilo" class="form-control col-md-7 col-xs-12" placeholder="000 kg" ">
+                           <select class="select2_group form-control" required="required" name="koyun_kardesdurumu">
+                               <option value="">Kuzu kaçız doğdu..</option>
+                               <option value="1">Tekiz</option>
+                               <option value="2">İkiz</option>
+                               <option value="3">Üçüz</option>
+                               <option value="4">Dördüz</option>
+                               <option value="5">Beşiz</option>
+                               <option value="6">Altız</option>
+                             </select>
                          </div>
                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Doğum Tarihi 
                           </label>
@@ -166,29 +174,30 @@
                            </div> 
                         </div>
                         <div class="form-group">
-                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Kardeş Sayısı* 
+                         
+                         <!--<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Canlı Ağırlık 
                          </label>
                          <div class="col-md-2 col-sm-2 col-xs-12">
-                           <input type="text" id="first-name"  required="required" name="koyun_kardesdurumu" class="form-control col-md-7 col-xs-12" placeholder="Kuzu kaçız doğdu..">
-                         </div>
-                         <label class="control-label col-md-2 col-sm-2 col-xs-12">Bölme* </label>
+                           <input type="text" id="first-name" name="koyun_kilo" class="form-control col-md-7 col-xs-12" placeholder="000 kg">
+                         </div>-->
+                         <!--<label class="control-label col-md-2 col-sm-2 col-xs-12">Bölme </label>
                            <div class="col-md-2 col-sm-2 col-xs-12">
-                             <select class="select2_group form-control" required="required" name="koyun_padok">
-                               <option value="">Bölme seçin..</option>
+                             <select class="select2_group form-control" name="koyun_padok">
+                               <option value="">Bölme seçin..</option>-->
                                <?php 
-                                 while ($padokcek=$padoksorgu->fetch(PDO::FETCH_ASSOC)) { ?>
-                                     <option value="<?php echo $padokcek['padok_id']; ?>"><?php echo $padokcek['padok_adi']; ?> (<?php echo $padokcek['padok_aciklama']; ?>) </option>
+                                 #while ($padokcek=$padoksorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                                     <!-- <option value="<?php #echo $padokcek['padok_id']; ?>"><?php #echo $padokcek['padok_adi']; ?> (<?php #echo $padokcek['padok_aciklama']; ?>) </option> -->
                                 <?php
-                                 } 
+                                 #} 
                                 ?>
-                             </select>
-                           </div>
+                             <!--</select>
+                           </div>-->
                        </div>
                         <div class="form-group">
                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Not
                          </label>
                          <div class="col-md-6 col-sm-6 col-xs-12">
-                           <input type="text" id="first-name" name="koyun_not" class="form-control col-md-7 col-xs-12" placeholder="İkizlik durumu vs..">
+                           <input type="text" id="first-name" name="koyun_not" class="form-control col-md-7 col-xs-12" placeholder="Doğum ağırlığı, doğum kolaylığı vb.">
                          </div>
                        </div>
                       <div class="form-group">
