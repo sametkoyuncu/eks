@@ -16,6 +16,30 @@
       'id' => $kullanici_id
       ));
     $sayacErkek=$erkeksorgu->rowCount();
+
+    date_default_timezone_set('Europe/Istanbul');
+    
+    $kuzusorgu=$db->prepare("SELECT * FROM koyun WHERE kullanici_id=:id and koyun_durum=1");
+    $kuzusorgu->execute(array(
+        'id' => $kullanici_id
+        ));
+    $kuzusayac = 0;
+    $dogum_tarihi = 0;
+    $bugun = 0;
+    $fark = 0;
+    while ($kuzucek=$kuzusorgu->fetch(PDO::FETCH_ASSOC)) { 
+         $dogum_tarihi = strtotime($kuzucek['koyun_dogumtarihi']);
+         $bugun = time();
+         $fark = $bugun - $dogum_tarihi;
+         $fark = $fark / (24*60*60);
+         $fark = floor($fark);
+         #$fark = $fark - 180;
+        if($fark < 180){
+            $kuzusayac++;
+        }
+        #echo $kuzucek['koyun_dogumtarihi'];
+        
+    }
 ?>
 
 <!-- Modal -->
@@ -83,7 +107,7 @@
                     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                       <div class="tile-stats">
                         <div class="icon"><img src="../images/eks-genel/kuzu2-yuvarlak-ikon.png" alt=""></div>
-                        <div class="count">00</div>
+                        <div class="count"><?php echo $kuzusayac ?></div>
                         <h3>Kuzu</h3>
                         <p>6 aylık ve altı tümü.<p>
                       </div>
