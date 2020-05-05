@@ -89,7 +89,7 @@
                         <div class="icon"><img src="../images/eks-genel/buzagi-yuvarlak-ikon.png" alt=""></div>
                         <div class="count"><?php echo $buzagisayac ?></div>
                         <h3>Buzağı</h3>
-                        <p>6 aylık ve altı tümü.<p>
+                        <p>6 aylık ve altı tümü.</p>
                       </div>
                     </div>
                     <!-- widget son -->
