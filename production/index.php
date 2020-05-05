@@ -55,6 +55,18 @@ $muhasebesorgu->execute(array(
         'id' => $kullanici_id
   ));  
   $sayacErkek=1;
+
+  $koyunsorgu=$db->prepare("SELECT * FROM koyun WHERE kullanici_id=:id and koyun_durum=1 ORDER BY koyun_kayittarihi ASC");
+  $koyunsorgu->execute(array(
+      'id' => $kullanici_id
+      ));
+  $koyunSayac=$koyunsorgu->rowCount();
+  
+  $ineksorgu=$db->prepare("SELECT * FROM hayvan WHERE kullanici_id=:id and hayvan_durum=1 ORDER BY hayvan_kayittarihi ASC");
+  $ineksorgu->execute(array(
+      'id' => $kullanici_id
+      ));
+  $inekSayac=$ineksorgu->rowCount();
 ?>
 
         <!-- page content -->
@@ -151,7 +163,7 @@ $muhasebesorgu->execute(array(
                           <div class="animated flipInY col-md-6 col-xs-12">
                             <div class="tile-stats">
                               <div class="icon"><img src="../images/eks-genel/inek-yuvarlak-ikon.png" alt=""></div>
-                              <div class="count"><?php echo $sayacErkek ?></div>
+                              <div class="count"><?php echo $inekSayac ?></div>
                                 <h3>Büyükbaş</h3>
                                 <p>Tüm büyükbaş sayısı.</p>
                             </div>
@@ -161,8 +173,8 @@ $muhasebesorgu->execute(array(
                           <div class="animated flipInY col-md-6 col-xs-12">
                             <div class="tile-stats">
                               <!--<div class="icon"><i class="fas fa-file" style="color:lightskyblue"></i></div>-->
-                              <div class="icon"><img src="../images/eks-genel/koyun-yuvarlak-ikon.png" alt=""></div>
-                              <div class="count"><?php echo $sayacErkek ?></div>
+                              <div class="icon"><img src="../images/eks-genel/tumu-yuvarlak-ikon.png" alt=""></div>
+                              <div class="count"><?php echo $koyunSayac ?></div>
                                 <h3>Küçükbaş</h3>
                                 <p>Tüm küçükbaş sayısı.</p>
                             </div>

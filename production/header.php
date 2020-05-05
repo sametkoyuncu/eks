@@ -79,7 +79,8 @@
               <a href="index.php" class="site_title text-center"><img src="images/logo.png" style="height:25px"></a>
             </div>-->
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa"><img src="../images/eks-genel/eks-logo-ikon.png" width="40px" height="auto" alt=""></i> <span><img src="images/logo.png" style="margin-left:20px"alt=""></span></a>
+              <!--<a href="index.html" class="site_title"><i class="fa"><img src="../images/eks-genel/eks-logo-ikon.png" width="40px" height="auto" alt=""></i> <span><img src="images/logo.png" style="margin-left:20px"alt=""></span></a>-->
+              <a href="index.php" class="site_title text-center"><img src="images/logo.png" style="height:45px"></a>
             </div>
             <div class="clearfix"></div>
 
