@@ -61,6 +61,7 @@
                           <th class="">Küpe No</th>
                           <th class="">Adı</th>
                           <th class="">Tohum Tarihi</th>
+                          <th class="">Doğum Tarihi</th>
                           <th class="">Tohum Irk</th>
                           <th class="">Açıklama</th>
                           <th class="">Ayarlar</th>
@@ -92,6 +93,11 @@
                           <td class="col-md-2 col-sm-2">
                             <?php 
                                 echo date("d.m.Y", strtotime($hayvancek["hayvan_tohumtarihi"]));
+                            ?>
+                          </td>
+                          <td class="col-md-2 col-sm-2">
+                            <?php 
+                                echo date("d.m.Y", strtotime($hayvancek["hayvan_dogumtarihi"]));
                             ?>
                           </td>
                           <td class="col-md-2 col-sm-2 col-xs-12">

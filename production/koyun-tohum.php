@@ -61,6 +61,7 @@
                           <th class="">Küpe No</th>
                           <th class="">Adı</th>
                           <th class="">Aşım Tarihi</th>
+                          <th class="">Doğum Tarihi</th>
                           <th class="">Aşım Yapan Koç</th>
                           <th class="">Açıklama</th>
                           <th class="">Ayarlar</th>
@@ -92,6 +93,11 @@
                           <td class="col-md-2 col-sm-2">
                             <?php 
                                 echo date("d.m.Y", strtotime($koyuntohumcek["koyun_tohumtarihi"]));
+                            ?>
+                          </td>
+                          <td class="col-md-2 col-sm-2">
+                            <?php 
+                                echo date("d.m.Y", strtotime($koyuntohumcek["koyun_dogumtarihi"]));
                             ?>
                           </td>
                           <td class="col-md-2 col-sm-2 col-xs-12">

@@ -457,17 +457,23 @@
 	#
 	if (isset($_POST['inektohumekle'])) {
 
+		$kayit_tarihi = strtotime($_POST['hayvan_tohumtarihi']);
+		$dogum_tarihi_unix = 24451200+$kayit_tarihi;
+		$dogum_tarihi = date('Y.m.d H:i:s', $dogum_tarihi_unix);
+
 		$hayvanekle=$db->prepare("INSERT INTO inek_tohum SET
 			kullanici_id=:k_id,
 			hayvan_id=:h_id,
 			inek_tohum_irk=:irk,
 			hayvan_tohumtarihi=:tohumtarihi,
+			hayvan_dogumtarihi=:dogumtarihi,
 			inek_tohum_not=:aciklama");
 		$ekle=$hayvanekle->execute(array(
 			'k_id' => $_POST['kullanici_id'],
 			'h_id' => $_POST['hayvan_id'],
 			'irk' => $_POST['inek_tohum_irk'],
 			'tohumtarihi' => $_POST['hayvan_tohumtarihi'],
+			'dogumtarihi' => $dogum_tarihi,
 			'aciklama' => $_POST['inek_tohum_not']
 			));
 		$inek_tohum_id=$db->lastInsertId();
@@ -483,9 +489,7 @@
 	  
 		$aciklama=$hayvan_adi." - Doğum (Hata payı 5 gün)";	
 
-		$kayit_tarihi = strtotime($_POST['hayvan_tohumtarihi']);
-		$dogum_tarihi_unix = 24624000+$kayit_tarihi;
-		$dogum_tarihi = date('Y.m.d H:i:s', $dogum_tarihi_unix);
+		
 
 		$hatirlaticiekle=$db->prepare("INSERT INTO hatirlatici SET
 			kullanici_id=:id,
@@ -575,7 +579,6 @@
 					'ref' => $referans_sil
 					));
 			if ($sil) {
-
 				header("Location:production/inek-tohum.php?durum=true");
 			} else {
 				header("Location:production/inek-tohum.php?durum=false");
@@ -1364,17 +1367,23 @@
 	#
 	if (isset($_POST['koyuntohumekle'])) {
 
+		$kayit_tarihi = strtotime($_POST['koyun_tohumtarihi']);
+		$dogum_tarihi_unix = 12960000+$kayit_tarihi;
+		$dogum_tarihi = date('Y.m.d H:i:s', $dogum_tarihi_unix);
+
 		$koyuntohumekle=$db->prepare("INSERT INTO koyun_tohum SET
 			kullanici_id=:k_id,
 			koyun_id=:h_id,
 			koyun_asim_koc=:koc,
 			koyun_tohumtarihi=:tohumtarihi,
+			koyun_dogumtarihi=:dogumtarihi,
 			koyun_tohum_not=:aciklama");
 		$ekle=$koyuntohumekle->execute(array(
 			'k_id' => $_POST['kullanici_id'],
 			'h_id' => $_POST['koyun_id'],
 			'koc' => $_POST['koyun_asim_koc'],
 			'tohumtarihi' => $_POST['koyun_tohumtarihi'],
+			'dogumtarihi' => $dogum_tarihi,
 			'aciklama' => $_POST['koyun_tohum_not']
 			));
 		$koyun_tohum_id=$db->lastInsertId();
