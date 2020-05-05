@@ -13,6 +13,36 @@
 
     $sosyal_medya_id=NULL;
 
+    $erkeksorgu=$db->prepare("SELECT * FROM hayvan WHERE kullanici_id=:id and hayvan_durum=1 and hayvan_cinsiyet=1");
+    $erkeksorgu->execute(array(
+      'id' => $kullanici_id
+      ));
+    $sayacErkek=$erkeksorgu->rowCount();
+
+    date_default_timezone_set('Europe/Istanbul');
+    
+    $buzagisorgu=$db->prepare("SELECT * FROM hayvan WHERE kullanici_id=:id and hayvan_durum=1");
+    $buzagisorgu->execute(array(
+        'id' => $kullanici_id
+        ));
+    $buzagisayac = 0;
+    $dogum_tarihi = 0;
+    $bugun = 0;
+    $fark = 0;
+    while ($buzagicek=$buzagisorgu->fetch(PDO::FETCH_ASSOC)) { 
+         $dogum_tarihi = strtotime($buzagicek['hayvan_dogumtarihi']);
+         $bugun = time();
+         $fark = $bugun - $dogum_tarihi;
+         $fark = $fark / (24*60*60);
+         $fark = floor($fark);
+         #$fark = $fark - 180;
+        if($fark < 180){
+            $buzagisayac++;
+        }
+        #echo $kuzucek['koyun_dogumtarihi'];
+        
+    }
+
 ?>
 
         <!-- page content -->
@@ -29,6 +59,54 @@
             <div class="clearfix"></div>
 
             <div class="row">
+              <!-- widgets start -->
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <!--<div class="x_panel">-->
+                  <div class="row top_tiles">
+                    <!-- widget başlangıç -->
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="tile-stats">
+                        <div class="icon"><img src="../images/eks-genel/tosun-yuvarlak-ikon.png" alt=""></div>
+                        <div class="count"><?php echo $sayacErkek ?></div>
+                        <h3>Erkek</h3>
+                        <p>Tosunlar.</p>
+                      </div>
+                    </div>
+                    <!-- widget son -->
+                    <!-- widget başlangıç -->
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="tile-stats">
+                        <div class="icon"><img src="../images/eks-genel/inek-yuvarlak-ikon2.png" alt=""></div>
+                        <div class="count"><?php echo $sayac-$sayacErkek ?></div>
+                        <h3>Dişi</h3>
+                        <p>Düve ve İnekler.</p>
+                      </div>
+                    </div>
+                    <!-- widget son -->
+                    <!-- widget başlangıç -->
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="tile-stats">
+                        <div class="icon"><img src="../images/eks-genel/buzagi-yuvarlak-ikon.png" alt=""></div>
+                        <div class="count"><?php echo $buzagisayac ?></div>
+                        <h3>Buzağı</h3>
+                        <p>6 aylık ve altı tümü.<p>
+                      </div>
+                    </div>
+                    <!-- widget son -->
+                    <!-- widget başlangıç -->
+                    <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="tile-stats">
+                        <div class="icon"><img src="../images/eks-genel/sigir-tumu-yuvarlak-ikon.png" alt=""></div>
+                        <div class="count"><?php echo $sayac ?></div>
+                        <h3>Toplam</h3>
+                        <p>Tüm sürü.</p>
+                      </div>
+                    </div>
+                    <!-- widget son -->
+                  </div><!-- row top_tiles -->
+                  <!--</div>--><!-- -- x_panel -->  
+              </div><!-- col-md-12 col-sm-12 col-xs-12 -->
+              <!-- widgets end -->
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
