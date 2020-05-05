@@ -182,7 +182,15 @@
                                   echo $tartimcek['tartim_kilo']." kg"; 
                             ?>
                           </td>
-                          <td class="red"><?php echo $hayvancek['hayvan_alisfiyati']." ₺"; ?></td>
+                          <td class="red">
+                            <?php 
+                              if ($hayvancek['hayvan_alisfiyati']>0) {
+                                echo $hayvancek['hayvan_alisfiyati']." ₺";
+                              } else {
+                                echo "Yok";
+                              }
+                            ?>
+                          </td>
                           <td class="green">
                             <?php 
                               if ($hayvancek['hayvan_satisfiyati']>0) {

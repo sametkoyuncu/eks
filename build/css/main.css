@@ -3,3 +3,9 @@
     padding: 0px 0px !important;
     border-radius: 50%
 }
+
+@media (max-width: 520px) { 
+    .gizlenecek-kisim {
+        display: none;
+    }
+ }
