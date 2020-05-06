@@ -109,7 +109,7 @@
                         <div class="icon"><img src="../images/eks-genel/kuzu2-yuvarlak-ikon.png" alt=""></div>
                         <div class="count"><?php echo $kuzusayac ?></div>
                         <h3>Kuzu</h3>
-                        <p>6 aylık ve altı tümü.<p>
+                        <p>6 aylık ve altı tümü.</p>
                       </div>
                     </div>
                     <!-- widget son -->

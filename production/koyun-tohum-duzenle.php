@@ -2,18 +2,22 @@
 
       include 'header.php'; 
       #ayarları veritabanından çekme
-      $inektohumsorgu=$db->prepare("SELECT * FROM inek_tohum WHERE kullanici_id=:id and inek_tohum_id=:inek_tohum_id");
-      $inektohumsorgu->execute(array(
+      $koyuntohumsorgu=$db->prepare("SELECT * FROM koyun_tohum WHERE kullanici_id=:id and koyun_tohum_id=:koyun_tohum_id");
+      $koyuntohumsorgu->execute(array(
         'id' => $kullanici_id,
-        'inek_tohum_id' => $_GET['inek_tohum_id']
+        'koyun_tohum_id' => $_GET['koyun_tohum_id']
         ));
-      $inektohumcek=$inektohumsorgu->fetch(PDO::FETCH_ASSOC);
+      $koyuntohumcek=$koyuntohumsorgu->fetch(PDO::FETCH_ASSOC);
 
-      $sayac=$inektohumsorgu->rowCount();
-
-      $irksorgu=$db->prepare("SELECT * FROM irk");
-      $irksorgu->execute();
+      #$irksorgu=$db->prepare("SELECT * FROM irk");
+      #$irksorgu->execute();
       #$irkcek=$irksorgu->fetch(PDO::FETCH_ASSOC);
+
+      $koyunsorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=0 and koyun_durum=1");
+      $koyunsorgu->execute();
+
+      $kocsorgu=$db->prepare("SELECT * FROM koyun WHERE koyun_cinsiyet=1 and koyun_durum=1");
+      $kocsorgu->execute();
 
 ?>
 
@@ -22,7 +26,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>İnek Tohum Kaydı </h3>
+                <h3>Koyun Tohum Kaydı </h3>
               </div>
             </div>
 
@@ -32,9 +36,9 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Düzenle<small></small></h2>
+                    <h2>Kayıt Ekle<small></small></h2>
                      <div class=" text-right">
-                        <a href="inek-tohum.php" class="btn btn-round btn-warning btn-sm"><i class="fa fa-chevron-left" aria-hidden="true"></i> Geri Dön</a>
+                        <a href="koyun-tohum.php" class="btn btn-round btn-warning btn-sm"><i class="fa fa-chevron-left" aria-hidden="true"></i> Geri Dön</a>
                       </div>
                     <div class="clearfix"></div>
                   </div>
@@ -58,23 +62,40 @@
 
                   <div class="x_content">
 
-                      <form action="../islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form action="../islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                       <input type="hidden" name="kullanici_id" value="<?php echo $kullanici_id ?>">
-                      <input type="hidden" name="inek_tohum_id" value="<?php echo $inektohumcek['inek_tohum_id']; ?>">
-                      <input type="hidden" name="hayvan_id" value="<?php echo $inektohumcek['hayvan_id']; ?>">
+                      <input type="hidden" name="koyun_tohum_id" value="<?php echo $koyuntohumcek['koyun_tohum_id']; ?>">
+                      <input type="hidden" name="koyun_id" value="<?php echo $koyuntohumcek['koyun_id']; ?>">
+                        <!--
+                        <div class="form-group">
+
+                           <label class="control-label col-md-3 col-sm-3 col-xs-12">Koyun </label>
+                           <div class="col-md-2 col-sm-2 col-xs-12">
+                             <select class="select2_group form-control" required="required" name="koyun_id">
+                               <option value="">Koyun seçin..</option>
+                               <?php 
+                                 while ($koyuncek=$koyunsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                                     <option value="<?php echo $koyuncek['koyun_id']; ?>"><?php echo $koyuncek['koyun_adi']; ?></option>
+                                <?php
+                                 } 
+                                ?>
+                             </select>
+                           </div>
+                          </div>
+                                -->
                        <div class="form-group">
                             <!--
                             ****
                             **** Irkın seçili olarak gelmesini ayarla
                             ****
                              -->
-                           <label class="control-label col-md-3 col-sm-3 col-xs-12">Tohum Irk </label>
+                           <label class="control-label col-md-3 col-sm-3 col-xs-12">Koç </label>
                            <div class="col-md-2 col-sm-2 col-xs-12">
-                             <select class="select2_group form-control" required="required" name="inek_tohum_irk">
-                               <option value="">Irk seçin..</option>
+                             <select class="select2_group form-control" required="required" name="koyun_asim_koc">
+                               <option value="">Koç seçin..</option>
                                <?php 
-                                 while ($irkcek=$irksorgu->fetch(PDO::FETCH_ASSOC)) { ?>
-                                     <option value="<?php echo $irkcek['irk_id']; ?>"><?php echo $irkcek['irk_adi']; ?></option>
+                                 while ($koccek=$kocsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                                     <option value="<?php echo $koccek['koyun_id']; ?>"><?php echo $koccek['koyun_adi']; ?></option>
                                 <?php
                                  } 
                                 ?>
@@ -82,11 +103,10 @@
                            </div>
                       <!--</div> 
                       <div class="form-group">-->
-                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Tohum Tarihi 
+                          <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Aşım Tarihi 
                           </label>
                           <div class="col-md-2 col-sm-2 col-xs-12">
-                            <?php $tohum_tarihi = $inektohumcek['hayvan_tohumtarihi']; ?>
-                            <input type="date" id="first-name" required="required" name="hayvan_tohumtarihi" class="form-control col-md-3 col-xs-12" value="<?php echo date('d-m-Y',strtotime($tohum_tarihi)); ?>">
+                            <input type="date" id="first-name" required="required" name="koyun_tohumtarihi" class="form-control col-md-3 col-xs-12" value="<?php echo date('d-m-Y',strtotime($tohum_tarihi)); ?>">
                           </div>  
                         </div>
 
@@ -94,13 +114,13 @@
                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Açıklama 
                          </label>
                          <div class="col-md-6 col-sm-6 col-xs-12">
-                           <textarea type="text" id="first-name" name="inek_tohum_not" class="form-control col-md-7 col-xs-12"><?php echo $inektohumcek['inek_tohum_not']; ?></textarea>
+                         <textarea type="text" id="first-name" name="koyun_tohum_not" class="form-control col-md-7 col-xs-12"><?php echo $koyuntohumcek['koyun_tohum_not']; ?></textarea>
                          </div>
                        </div>
 
                       <div class="form-group">
                         <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button type="submit" name="inektohumguncelle" class="btn btn-round btn-success">Kaydet</button>
+                          <button type="submit" name="koyuntohumguncelle" class="btn btn-round btn-success">Kaydet</button>
                         </div>
                       </div>
 

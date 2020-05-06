@@ -4,7 +4,7 @@
     border-radius: 50%
 }
 
-@media (max-width: 520px) { 
+@media (max-width: 768px) { 
     .gizlenecek-kisim {
         display: none;
     }

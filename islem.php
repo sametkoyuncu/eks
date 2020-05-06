@@ -1426,18 +1426,19 @@
 	#
 	#koyu tohum ayarı - koyun tohum güncelle
 	#
+	#
+	# EKSİK 
+	#
 	if (isset($_POST['koyuntohumguncelle'])) {
 
-		$inektohumgukoyuntohumguncellencelle=$db->prepare("UPDATE koyun_tohum SET
-			koyun_asim_koc=:koc,			
-			koyun_kayittarihi=:kayittarihi,
+		$koyuntohumguncelle=$db->prepare("UPDATE koyun_tohum SET
+			koyun_asim_koc=:koc,
 			koyun_tohumtarihi=:tohumtarihi,
 			koyun_tohum_not=:aciklama
 			WHERE koyun_tohum_id=:id");
 		$guncelle=$koyuntohumguncelle->execute(array(
 			'koc' => $_POST['koyun_asim_koc'],
 			'tohumtarihi' => $_POST['koyun_tohumtarihi'],
-			'kayittarihi' => $_POST['koyun_kayittarihi'],
 			'aciklama' => $_POST['koyun_tohum_not'],
 			'id' => $_POST['koyun_tohum_id']
 			));

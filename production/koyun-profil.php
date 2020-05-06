@@ -42,16 +42,16 @@
               <div class="title_left">
                 <h3>
                   <a href="koyunlar.php" class="btn btn-round btn-warning btn-sm"><i class="fa fa-chevron-left" aria-hidden="true"></i> Geri Dön</a>
-                    <?php echo $koyuncek['koyun_kupeno'] ?> Küpeli Koyun Bilgileri
-                  </h3>
+                  <?php echo $koyuncek['koyun_kupeno']." Küpeli Koyun"; ?> 
+                </h3>
               </div>
-
+              <!--
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right">
                   <div class="input-group">
                   </div>
                 </div>
-              </div>
+              </div>-->
             </div>
 
             <div class="clearfix"></div>
@@ -76,15 +76,15 @@
                       </div>
                      </div>
                      <hr>
-                    <h3>
+                    <h4>
                         <?php 
-                            echo "<b>İşletme Küpesi:</b> <br>";
+                            echo "<b>İşletme Küpesi:</b>";
                             if(strlen($koyuncek['koyun_kupeno_isletme'])>0){
                               echo $koyuncek['koyun_kupeno_isletme'];
                             }else{
                               echo "Belirtilmemiş";
                             } ?>
-                      </h3>
+                      </h4>
                       <hr>
                       <ul class="list-unstyled user_data">
                         <li>
@@ -243,7 +243,7 @@
                       <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
                           <div class="col-md-6 col-xs-12">
-                            Anne Bilgileri(<small><a href="#" style="color:hotpink !important;">Profiline Bak</a></small>):
+                            Anne Bilgileri(<small><a href="koyun-profil.php?koyun_id=<?php echo $annecek['koyun_id']; ?>" target="_blank" style="color:hotpink !important;">Profiline Bak</a></small>):
                             <ul>
                               <li>İşletme Küpesi: Düzenlenecek </li>
                               <li>Eş (Kardeş Sayısı) durumu: Düzenlenecek </li>

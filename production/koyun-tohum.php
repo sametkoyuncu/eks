@@ -116,8 +116,8 @@
                           </td>
                           
                           <td class="text-center">
-                            <!-- <a href="hayvan-profil.php?hayvan_id=<?php echo $koyuntohumcek['koyun_tohum_id']; ?>" class="btn btn-round btn-primary btn-xs"><i class="fa fa-info" aria-hidden="true"></i> Ayrıntılar</a> -->
-                            <a href="koyun-tohum-duzenle.php?koyun_tohum_id=<?php echo $koyuntohumcek['koyun_tohum_id']; ?>" class="btn btn-round btn-info btn-xs"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Düzenle</a>
+                            <!-- <a href="hayvan-profil.php?hayvan_id=<?php #echo $koyuntohumcek['koyun_tohum_id']; ?>" class="btn btn-round btn-primary btn-xs"><i class="fa fa-info" aria-hidden="true"></i> Ayrıntılar</a> -->
+                            <!-- <a href="koyun-tohum-duzenle.php?koyun_tohum_id=<?php #echo $koyuntohumcek['koyun_tohum_id']; ?>" class="btn btn-round btn-info btn-xs"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Düzenle</a> -->
                             <a href="../islem.php?koyuntohumsil=true&koyun_tohum_id=<?php echo $koyuntohumcek['koyun_tohum_id']; ?>" class="btn btn-round btn-danger btn-xs"><i class="fa fa-trash-alt" aria-hidden="true"></i> Sil</a>
                           </td>
                         </tr>
