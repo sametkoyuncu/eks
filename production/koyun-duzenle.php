@@ -20,6 +20,15 @@
         'id' => $koyuncek['koyun_irk']
         ));
       $irkadicek=$irkadisorgu->fetch(PDO::FETCH_ASSOC);
+      #koyunun ait olduğu gruğ bilgisi
+      $koyungrupsorgu=$db->prepare("SELECT * FROM koyun_grup WHERE koyun_grup_id=:id");
+      $koyungrupsorgu->execute(array(
+        'id' => $koyuncek['koyun_grup_id']
+        ));
+      $koyungrupcek=$koyungrupsorgu->fetch(PDO::FETCH_ASSOC);
+      #liste için tüm gruplar
+      $grupsorgu=$db->prepare("SELECT * FROM koyun_grup");
+      $grupsorgu->execute();
 
 ?>
 
@@ -193,6 +202,25 @@
                                 <?php } ?>
                             </select>
                           </div>
+                      </div>
+                      <div class="form-group">
+                            <!--
+                            ****
+                            **** Grubun seçili olarak gelmesini ayarla
+                            ****
+                             -->
+                           <label class="control-label col-md-3 col-sm-3 col-xs-12">Grup </label>
+                           <div class="col-md-2 col-sm-2 col-xs-12">
+                             <select class="select2_group form-control"  name="koyun_grup_id">
+                               <option value="<?php echo $koyuncek['koyun_grup_id']; ?>"><?php echo $koyungrupcek['koyun_grup_adi']; ?></option>
+                               <?php 
+                                 while ($grupcek=$grupsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                                     <option value="<?php echo $grupcek['koyun_grup_id']; ?>"><?php echo $grupcek['koyun_grup_adi']; ?></option>
+                                <?php
+                                 } 
+                                ?>
+                             </select>
+                           </div>
                       </div>
                       <div class="form-group">
                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Not 

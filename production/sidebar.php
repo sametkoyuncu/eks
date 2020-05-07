@@ -34,7 +34,7 @@
                     <ul class="nav child_menu">
                       <li><a href="koyunlar.php">Tüm Koyunlar</a></li>
                       <li><a href="koyun-tohum.php">Koyun Aşım Kayıtları</a></li>
-                      <li><a href="gruplar.php">Gruplar</a></li>
+                      <li><a href="koyun-gruplari.php">Gruplar</a></li>
                       <li><a href="koyun-arsiv.php">Arşiv</a></li>
                     </ul>
                   </li>

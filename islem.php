@@ -1289,6 +1289,7 @@
 			koyun_cinsiyet=:cinsiyet,
 			koyun_alisfiyati=:alisfiyati,
 			koyun_satisfiyati=:satisfiyati,
+			koyun_grup_id=:grup,
 			koyun_durum=:durum,
 			koyun_nitelik=:nitelik,
 			ana_id=:ana,
@@ -1302,6 +1303,7 @@
 			'cinsiyet' => $_POST['koyun_cinsiyet'],
 			'alisfiyati' => $_POST['koyun_alisfiyati'],
 			'satisfiyati' => $_POST['koyun_satisfiyati'],
+			'grup' => $_POST['koyun_grup_id'],
 			'durum' => $_POST['koyun_durum'],
 			'nitelik' => $_POST['koyun_nitelik'],
 			'ana' => $_POST['ana_id'],
@@ -1503,5 +1505,69 @@
 		}	
 	}	
 
-?>
 
+####################################################################################
+############					   koyun grup ayarı						############
+####################################################################################
+	#
+	#koyun grup ayarı - koyun grup ekle
+	#
+	if (isset($_POST['koyungrupekle'])) {
+
+		$koyungrupekle=$db->prepare("INSERT INTO koyun_grup SET
+			kullanici_id=:id,
+			koyun_grup_adi=:grup_adi,
+			koyun_grup_not=:nott");
+		$ekle=$koyungrupekle->execute(array(
+			'id' => $_POST['kullanici_id'],
+			'grup_adi' => $_POST['koyun_grup_adi'],
+			'nott' => $_POST['koyun_grup_not']
+			));
+	
+
+		if ($ekle) {
+			header("Location:production/koyun-gruplari.php?durum=true");
+		} else {
+			header("Location:production/koyun-gruplari.php?durum=false");
+		}
+	}
+
+	#
+	#koyun grup ayarı - koyun grup güncelle
+	#
+	if (isset($_POST['koyungrupguncelle'])) {
+		$koyun_grup_id = $_POST['koyun_grup_id'];
+		$koyungrupguncelle=$db->prepare("UPDATE koyun_grup SET
+			koyun_grup_adi=:grup_adi,
+			koyun_grup_not=:nott
+			WHERE koyun_grup_id=:id");
+		$guncelle=$koyungrupguncelle->execute(array(
+			'grup_adi' => $_POST['koyun_grup_adi'],
+			'nott' => $_POST['koyun_grup_not'],
+			'id' => $koyun_grup_id
+			));
+
+		if ($guncelle) {
+			header("Location:production/koyun-grup-duzenle.php?durum=true&koyun_grup_id=$koyun_grup_id");
+		} else {
+			header("Location:production/koyun-grup-duzenle.php?durum=false&koyun_grup_id=$koyun_grup_id");
+		}
+	}
+
+	#
+	#koyun grup ayarı - koyun grup sil
+	#
+	if(isset($_GET['koyungrupsil'])) {
+		if ($_GET['koyungrupsil']=="true") {
+			$koyungrupsil=$db->prepare("DELETE FROM koyun_grup WHERE koyun_grup_id=:id");
+			$sil=$koyungrupsil->execute(array(
+				'id' => $_GET['koyun_grup_id']
+				));
+			if ($sil) {
+
+				header("Location:production/koyun-gruplari.php?durum=true");
+			} else {
+				header("Location:production/koyun-gruplari.php?durum=false");
+			}
+		}	
+	}

@@ -8,6 +8,8 @@
     $sayac=$koyunsorgu->rowCount();
 
     $irksorgu=$db->prepare("SELECT * FROM irk_koyun WHERE irk_id=:id");
+
+    $grupsorgu=$db->prepare("SELECT * FROM koyun_grup WHERE koyun_grup_id=:id");
     
     $tartimsorgu=$db->prepare("SELECT * FROM tartim_koyun WHERE kullanici_id=:k_id and hayvan_id=:h_id ORDER BY tartim_tarihi DESC");
     
@@ -161,9 +163,10 @@
                         <th>İşletme K.</th>
                           <th>Devlet Küpesi</th>
                           <th>Koyun Adı</th>
+                          <th class="">Grup</th>
                           <th class="col-md-1 col-sm-1">Irk</th>
                           <th class="col-md-1 col-sm-1">Cinsiyet</th>
-                          <th class="">Nitelik</th>
+                          <!--<th class="">Nitelik</th>-->
                           <th></th>
                         </tr>
                       </thead>
@@ -172,9 +175,25 @@
                       <tbody>
                       <?php while ($koyuncek=$koyunsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
                         <tr>
-                          <td><?php echo $koyuncek['koyun_kupeno_isletme']; ?></td>
-                          <td><?php echo $koyuncek['koyun_kupeno']; ?></td>
+                          <td class="text-center"><?php echo $koyuncek['koyun_kupeno_isletme']; ?></td>
+                          <td class="text-center" >
+                            <?php if(isset($koyuncek['koyun_kupeno'])){
+                              echo $koyuncek['koyun_kupeno'];
+                            } else {
+                              echo "TR 34 XXXX XXX XX";
+                            }
+                            ?>
+                          </td>
                           <td><?php echo $koyuncek['koyun_adi']; ?></td>
+                          <td>
+                          <?php 
+                            $grupsorgu->execute(array(
+                              'id' => $koyuncek['koyun_grup_id']
+                              ));
+                            $grupcek=$grupsorgu->fetch(PDO::FETCH_ASSOC);
+                            echo $grupcek['koyun_grup_adi'];
+                          ?>
+                          </td>
                           <td>
                           <?php 
                             $irksorgu->execute(array(
@@ -193,9 +212,10 @@
                             }
                           ?>
                           </td>
+                          <!--
                           <td>
                             <?php 
-                              if($koyuncek['koyun_nitelik']=='1'){
+                              /*if($koyuncek['koyun_nitelik']=='1'){
                                 echo "Damızlık";
                               }elseif($koyuncek['koyun_nitelik']=='2'){
                                 echo "Adaklık";
@@ -203,9 +223,10 @@
                                 echo "Kurbanlık";
                               }elseif($koyuncek['koyun_nitelik']=='4'){
                                 echo "Kasaplık";
-                              }
+                              }*/
                             ?>
                           </td>
+                          -->
                           <td class="text-center">
                             <a href="koyun-profil.php?koyun_id=<?php echo $koyuncek['koyun_id']; ?>" class="btn btn-round btn-primary btn-xs"><i class="fa fa-info" aria-hidden="true"></i> Ayrıntılar</a>
                             <a href="koyun-duzenle.php?koyun_id=<?php echo $koyuncek['koyun_id']; ?>" class="btn btn-round btn-info btn-xs"><i class="far fa-edit" aria-hidden="true"></i> Düzenle</a>
