@@ -6,6 +6,8 @@ $koyungrupsorgu->execute(array(
   'id' => $kullanici_id
 ));
 $sayac = $koyungrupsorgu->rowCount();
+
+$padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE koyun_padok_id=:id");
 ?>
 
 <!-- page content -->
@@ -45,7 +47,7 @@ $sayac = $koyungrupsorgu->rowCount();
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            Bu sayfada hayvanları belirli özelliklerine göre gruplandırıp toplu işlemler, onlara özel padok ve rasyon atayabilirsiniz. Buradan <a href="" class="btn btn-round btn-warning btn-xs"><i class="fas fa-plus" aria-hidden="true"></i> Yeni Padok Oluştur</a>abilir ve buradan da <a href="" class="btn btn-round btn-warning btn-xs"><i class="fas fa-plus" aria-hidden="true"></i> Yeni Rasyon Ekle</a>yebilirsiniz.
+            Bu sayfada hayvanları belirli özelliklerine göre gruplandırıp toplu işlemler, onlara özel padok ve rasyon atayabilirsiniz. Buradan <a href="koyun-padok-ekle.php" class="btn btn-round btn-warning btn-xs"><i class="fas fa-plus" aria-hidden="true"></i> Yeni Padok Oluştur</a>abilir ve buradan da <a href="" class="btn btn-round btn-warning btn-xs"><i class="fas fa-plus" aria-hidden="true"></i> Yeni Rasyon Ekle</a>yebilirsiniz.
           </div>
         </div>
       </div>
@@ -53,7 +55,7 @@ $sayac = $koyungrupsorgu->rowCount();
 
     <div class="row">
       <!-- widget başlangıç-->
-      <?php while ($koyungrupcek=$koyungrupsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+      <?php while ($koyungrupcek = $koyungrupsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
         <?php
         $grup_id = $koyungrupcek['koyun_grup_id'];
         $koyunsorgu = $db->prepare("SELECT * FROM koyun WHERE kullanici_id=:id and koyun_grup_id=:grup_id");
@@ -63,50 +65,60 @@ $sayac = $koyungrupsorgu->rowCount();
         ));
         $sayac = $koyunsorgu->rowCount();
         ?>
-      <div class="col-md-4 col-xs-12">
-        <div class="x_panel fixed_height_210">
-          <div class="">
-            <h2 class="">
-              <?php echo $koyungrupcek['koyun_grup_adi']; ?>&nbsp;&nbsp;&nbsp;
-            </h2>
+        <div class="col-md-4 col-xs-12">
+          <div class="x_panel fixed_height_210">
+            <div class="">
+              <h2 class="">
+                <?php echo $koyungrupcek['koyun_grup_adi']; ?>&nbsp;&nbsp;&nbsp;
+              </h2>
 
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <!--<img class="col-md-12" src="../images/iletisim.jpg" alt="">-->
-            <table class="table table-bordered table-hover">
-              <tbody>
-                <tr>
-                  <th>Bulunduğu Bölme:</th>
-                  <td><del>Bölme Adı</del></td>
-                </tr>
-                <tr>
-                  <th>Oluşturma Tarihi:</th>
-                  <td><?php echo date("d.m.Y", strtotime($koyungrupcek['koyun_grup_kayittarihi'])); ?></td>
-                </tr>
-                <tr>
-                  <th>Hayvan Sayısı:</th>
-                  <td><?php echo $sayac; ?></td>
-                </tr>
-                <tr>
-                  <th>Uygulanan Rasyon:</th>
-                  <td><del>Rasyon Adı</del></td>
-                </tr>
-                <tr>
-                  <th>Notlar:</th>
-                  <td><?php echo substr($koyungrupcek['koyun_grup_not'],0,20)."..."; ?></td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="grup_buton_grup text-center">
-              <a href="koyun-grup-islemler.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-success btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> İşlem Ekle</a>
-              <a href="koyun-grup-ayrintilar.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-primary btn-xs"><i class="fa fa-info" aria-hidden="true"></i> Ayrıntılar</a>
-              <a href="koyun-grup-duzenle.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-info btn-xs"><i class="far fa-edit" aria-hidden="true"></i> Düzenle</a>
-              <a href="../islem.php?koyungrupsil=true&koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-danger btn-xs"><i class="far fa-trash-alt" aria-hidden="true"></i> Sil</a>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <!--<img class="col-md-12" src="../images/iletisim.jpg" alt="">-->
+              <table class="table table-bordered table-hover">
+                <tbody>
+                  <tr>
+                    <th>Bulunduğu Bölme:</th>
+                    <td>
+                      <?php
+                      $padoksorgu->execute(array(
+                        'id' => $koyungrupcek['koyun_grup_padokid']
+                      ));
+                      $padokcek = $padoksorgu->fetch(PDO::FETCH_ASSOC);
+                      if(isset($padokcek['koyun_padok_adi'])){echo $padokcek['koyun_padok_adi'];}
+                      else {echo "Padok seçilmemiş..";}
+                        
+                      ?>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Oluşturma Tarihi:</th>
+                    <td><?php echo date("d.m.Y", strtotime($koyungrupcek['koyun_grup_kayittarihi'])); ?></td>
+                  </tr>
+                  <tr>
+                    <th>Hayvan Sayısı:</th>
+                    <td><?php echo $sayac; ?></td>
+                  </tr>
+                  <tr>
+                    <th>Uygulanan Rasyon:</th>
+                    <td><del>Rasyon Adı</del></td>
+                  </tr>
+                  <tr>
+                    <th>Notlar:</th>
+                    <td><?php echo substr($koyungrupcek['koyun_grup_not'], 0, 20) . "..."; ?></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="grup_buton_grup text-center">
+                <a href="koyun-grup-islemler.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-success btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> İşlem Ekle</a>
+                <a href="koyun-grup-ayrintilar.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-primary btn-xs"><i class="fa fa-info" aria-hidden="true"></i> Ayrıntılar</a>
+                <a href="koyun-grup-duzenle.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-info btn-xs"><i class="far fa-edit" aria-hidden="true"></i> Düzenle</a>
+                <a href="../islem.php?koyungrupsil=true&koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-danger btn-xs"><i class="far fa-trash-alt" aria-hidden="true"></i> Sil</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       <?php } ?>
       <!-- widget son-->
     </div>

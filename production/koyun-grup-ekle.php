@@ -1,5 +1,8 @@
 <?php
 include 'header.php';
+
+$padoksorgu = $db->prepare("SELECT * FROM koyun_padok");
+$padoksorgu->execute();
 ?>
 
 <!-- page content -->
@@ -34,10 +37,24 @@ include 'header.php';
                 </div>
               </div>
               <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Padok </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select class="select2_group form-control" name="koyun_padok_id">
+                    <option value="">Padok yok..</option>
+                    <?php
+                    while ($padokcek = $padoksorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                      <option value="<?php echo $padokcek['koyun_padok_id']; ?>"><?php echo $padokcek['koyun_padok_adi'] . " - " . substr($padokcek['koyun_padok_not'], 0, 50) . ".."; ?></option>
+                    <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Not
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="first-name" name="koyun_grup_not" class="form-control col-md-7 col-xs-12" placeholder="Besilik kuzuların olduğu grup vb.">
+                  <textarea type="text" id="first-name" name="koyun_grup_not" class="form-control col-md-7 col-xs-12" placeholder="Besilik kuzuların olduğu grup vb."></textarea>
                 </div>
               </div>
               <div class="form-group">

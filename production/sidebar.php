@@ -35,6 +35,7 @@
                       <li><a href="koyunlar.php">Tüm Koyunlar</a></li>
                       <li><a href="koyun-tohum.php">Koyun Aşım Kayıtları</a></li>
                       <li><a href="koyun-gruplari.php">Gruplar</a></li>
+                      <li><a href="koyun-padoklari.php">Padoklar</a></li>
                       <li><a href="koyun-arsiv.php">Arşiv</a></li>
                     </ul>
                   </li>

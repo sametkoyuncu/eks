@@ -1517,10 +1517,12 @@
 		$koyungrupekle=$db->prepare("INSERT INTO koyun_grup SET
 			kullanici_id=:id,
 			koyun_grup_adi=:grup_adi,
+			koyun_grup_padokid=:padok_id,
 			koyun_grup_not=:nott");
 		$ekle=$koyungrupekle->execute(array(
 			'id' => $_POST['kullanici_id'],
 			'grup_adi' => $_POST['koyun_grup_adi'],
+			'padok_id' => $_POST['koyun_padok_id'],
 			'nott' => $_POST['koyun_grup_not']
 			));
 	
@@ -1539,10 +1541,12 @@
 		$koyun_grup_id = $_POST['koyun_grup_id'];
 		$koyungrupguncelle=$db->prepare("UPDATE koyun_grup SET
 			koyun_grup_adi=:grup_adi,
+			koyun_grup_padokid=:padok_id,
 			koyun_grup_not=:nott
 			WHERE koyun_grup_id=:id");
 		$guncelle=$koyungrupguncelle->execute(array(
 			'grup_adi' => $_POST['koyun_grup_adi'],
+			'padok_id' => $_POST['koyun_padok_id'],
 			'nott' => $_POST['koyun_grup_not'],
 			'id' => $koyun_grup_id
 			));
@@ -1564,10 +1568,75 @@
 				'id' => $_GET['koyun_grup_id']
 				));
 			if ($sil) {
-
 				header("Location:production/koyun-gruplari.php?durum=true");
 			} else {
 				header("Location:production/koyun-gruplari.php?durum=false");
 			}
 		}	
 	}
+####################################################################################
+############					   koyun padok ayarı					############
+####################################################################################
+	#
+	#koyun padok ayarı - koyun padok ekle
+	#
+	if (isset($_POST['koyunpadokekle'])) {
+
+		$koyunpadokekle=$db->prepare("INSERT INTO koyun_padok SET
+			kullanici_id=:id,
+			koyun_padok_adi=:padok_adi,
+			koyun_padok_not=:nott");
+		$ekle=$koyunpadokekle->execute(array(
+			'id' => $_POST['kullanici_id'],
+			'padok_adi' => $_POST['koyun_padok_adi'],
+			'nott' => $_POST['koyun_padok_not']
+			));
+	
+
+		if ($ekle) {
+			header("Location:production/koyun-padoklari.php?durum=true");
+		} else {
+			header("Location:production/koyun-padoklari.php?durum=false");
+		}
+	}
+
+	#
+	#koyun padok ayarı - koyun padok güncelle
+	#
+	if (isset($_POST['koyunpadokguncelle'])) {
+		$koyun_padok_id = $_POST['koyun_padok_id'];
+		$koyunpadokguncelle=$db->prepare("UPDATE koyun_padok SET
+			koyun_padok_adi=:padok_adi,
+			koyun_padok_not=:nott
+			WHERE koyun_padok_id=:id");
+		$guncelle=$koyunpadokguncelle->execute(array(
+			'padok_adi' => $_POST['koyun_padok_adi'],
+			'nott' => $_POST['koyun_padok_not'],
+			'id' => $koyun_padok_id
+			));
+
+		if ($guncelle) {
+			header("Location:production/koyun-padok-duzenle.php?durum=true&koyun_padok_id=$koyun_padok_id");
+		} else {
+			header("Location:production/koyun-padok-duzenle.php?durum=false&koyun_padok_id=$koyun_padok_id");
+		}
+	}
+
+	#
+	#koyun padok ayarı - koyun padok sil
+	#
+	if(isset($_GET['koyunpadoksil'])) {
+		if ($_GET['koyunpadoksil']=="true") {
+			$koyunpadoksil=$db->prepare("DELETE FROM koyun_padok WHERE koyun_padok_id=:id");
+			$sil=$koyunpadoksil->execute(array(
+				'id' => $_GET['koyun_padok_id']
+				));
+			if ($sil) {
+				header("Location:production/koyun-padoklari.php?durum=true");
+			} else {
+				header("Location:production/koyun-padoklari.php?durum=false");
+			}
+		}	
+	}
+
+?>
