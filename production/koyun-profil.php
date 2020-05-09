@@ -11,7 +11,7 @@
 
     $sayac=$koyunsorgu->rowCount();
 
-    $irksorgu=$db->prepare("SELECT * FROM irk WHERE irk_id=:id");
+    $irksorgu=$db->prepare("SELECT * FROM irk_koyun WHERE irk_id=:id");
 
     $tartimsorgu=$db->prepare("SELECT * FROM tartim_koyun WHERE kullanici_id=:id and hayvan_id=:koyun_id");
     $tartimsorgu->execute(array(
