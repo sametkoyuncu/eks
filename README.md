@@ -6,4 +6,4 @@
     3- 'baglan.php' dosyasını açıp kendi veritananınıza göre düzenleyiniz.
     Bu adımlardan sonra sistem kullanıma hazır olacaktır.
 # yapılacaklar
-    1- Kuzu Doğum kaydı eklerken girişte kaçız kuzu bilgisi alınsın ve ona göre toplu giriş imkanı verilsin. Tek tek zor oluyor ve sıkıyor.. Yanlış bilgi girmeye de mahal verebilir.
+    1- ✓ Kuzu Doğum kaydı eklerken girişte kaçız kuzu bilgisi alınsın ve ona göre toplu giriş imkanı verilsin. Tek tek zor oluyor ve sıkıyor.. Yanlış bilgi girmeye de mahal verebilir.

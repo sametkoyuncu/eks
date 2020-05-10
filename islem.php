@@ -1639,4 +1639,59 @@
 		}	
 	}
 
-?>
+####################################################################################
+############					   koyun ayarı							############
+####################################################################################
+	#
+	#koyun ayarı - toplu koyun ekle
+	#
+	if (isset($_POST['toplukoyunekle'])) {
+		$resmi_kupe = $_POST["koyun_kupeno"];
+		$isletme_kupe = $_POST["koyun_kupeno_isletme"];
+		$adi = $_POST["koyun_adi"];
+		$cinsiyet = $_POST["koyun_cinsiyet"];
+		$nott = $_POST["koyun_bott"];
+		foreach( $resmi_kupe as $key => $resmiKupe ){
+			$koyunekle=$db->prepare("INSERT INTO koyun SET
+				kullanici_id=:id,
+				koyun_kupeno=:kupeno,
+				koyun_kupeno_isletme=:kupeno_isletme,
+				koyun_adi=:adi,
+				koyun_irk=:irk,
+				koyun_cinsiyet=:cinsiyet,
+				koyun_alisfiyati=:alisfiyati,
+				koyun_alistarihi=:alistarihi,
+				koyun_dogumtarihi=:dogumtarihi,
+				koyun_durum=:durum,
+				ana_id=:ana,
+				baba_id=:baba,
+				koyun_nitelik=:nitelik,
+				koyun_padok=:padok,
+				koyun_kardesdurumu=:kardesdurumu,
+				koyun_not=:nott");
+			$ekle=$koyunekle->execute(array(
+				'id' => $_POST['kullanici_id'],
+				'kupeno' => strtoupper($resmiKupe),
+				'kupeno_isletme' => strtoupper($isletme_kupe[$key]),
+				'adi' => $adi[$key],
+				'irk' => $_POST['koyun_irk'],
+				'cinsiyet' => $cinsiyet[$key],
+				'alisfiyati' => $_POST['koyun_alisfiyati'],
+				'alistarihi' => $_POST['koyun_alistarihi'],
+				'dogumtarihi' => $_POST['koyun_dogumtarihi'],
+				'durum' => $_POST['koyun_durum'],
+				'ana' => $_POST['ana_id'],
+				'baba' => $_POST['baba_id'],
+				'nitelik' => $_POST['koyun_nitelik'],
+				'padok' => $_POST['koyun_padok'],
+				'kardesdurumu' => $_POST['koyun_kardesdurumu'],
+				'nott' => $nott[$key]
+				));
+			
+			if ($ekle) {
+				header("Location:production/koyunlar.php?durum=true");
+			} else {
+				header("Location:production/koyunlar.php?durum=false");
+			}
+		}
+	}
