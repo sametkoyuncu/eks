@@ -67,6 +67,11 @@ $muhasebesorgu->execute(array(
       'id' => $kullanici_id
       ));
   $inekSayac=$ineksorgu->rowCount();
+
+  $yemsorgu=$db->prepare("SELECT * FROM yem WHERE kullanici_id=:id");
+    $yemsorgu->execute(array(
+      'id' => $kullanici_id
+      ));
 ?>
 
         <!-- page content -->
@@ -180,6 +185,61 @@ $muhasebesorgu->execute(array(
                             </div>
                           </div>
                           <!-- widget son -->
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    
+                    <div class="x_panel">
+                        <div class="x_title">
+                          <h2>Yem Stoğu Özet</h2>
+                          <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                          </ul>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                        <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th class="">Ad</th>
+                          <th class="col-md-2 col-sm-2 col-xs-12">Depodaki Miktar</th>
+                          <th class="">Birim</th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                      <?php while ($yemcek=$yemsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                        <tr>
+                          <td><?php echo $yemcek['yem_adi']; ?></td>
+                          <td><?php echo $yemcek['yem_miktari']; ?></td>
+                          <td>
+                            <?php
+                              $birimsorgu=$db->prepare("SELECT * FROM birim WHERE birim_id=:id");
+                              $birimsorgu->execute(array(
+                                'id' => $yemcek['yem_birimi']
+                                ));
+                              $birimcek=$birimsorgu->fetch(PDO::FETCH_ASSOC);
+                              echo $birimcek['birim_adi']; 
+                            ?>
+                          </td>
+                        </tr>
+                       <?php } ?>
+                      </tbody>
+                    </table>
                         </div>
                     </div>
                   </div>

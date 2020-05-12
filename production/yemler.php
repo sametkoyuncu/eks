@@ -78,7 +78,7 @@
                           </td>
                           <td class="text-center">
                             <!--<a href="yem-duzenle.php?yem_id=<?php echo $yemcek['yem_id']; ?>" class="btn btn-round btn-info btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i> Düzenle</a>-->
-                            <a href="../../islem.php?yemsil=true&yem_id=<?php echo $yemcek['yem_id']; ?>" class="btn btn-round btn-danger btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i> Sil</a>
+                            <a href="../islem.php?yemsil=true&yem_id=<?php echo $yemcek['yem_id']; ?>" class="btn btn-round btn-danger btn-xs"><i class="far fa-trash-alt" aria-hidden="true"></i> Sil</a>
                           </td>
                         </tr>
                        <?php } ?>

@@ -2,9 +2,6 @@
 
       include 'header.php';
 
-      $birimsorgu=$db->prepare("SELECT * FROM birim");
-      $birimsorgu->execute();
-      #$irkcek=$irksorgu->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -17,9 +14,9 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Yeni Birim Ekle<small></small></h2>
+                    <h2>Yeni Koyun Irkı Ekle<small></small></h2>
                      <div class=" text-right">
-                     <a href="birimler.php" class="btn btn-round btn-warning btn-sm"><i class="fa fa-chevron-left" aria-hidden="true"></i> Geri Dön</a>
+                     <a href="irklar.php" class="btn btn-round btn-warning btn-sm"><i class="fa fa-chevron-left" aria-hidden="true"></i> Geri Dön</a>
                       </div>
                     <div class="clearfix"></div>
                   </div>
@@ -49,19 +46,19 @@
                          <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Adı 
                          </label>
                          <div class="col-md-6 col-sm-6 col-xs-12">
-                           <input type="text" id="first-name" name="birim_adi" class="form-control col-md-7 col-xs-12" placeholder="Birim adını giriniz..">
+                           <input type="text" id="first-name" name="irk_adi" class="form-control col-md-7 col-xs-12" placeholder="Irk adını giriniz..">
                          </div>
                        </div>
                       <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Açıklama
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Özellikleri
                            </label>
                           <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea name="birim_aciklama" class="col-md-12 col-sm-12 col-xs-12" placeholder="İsterseniz buraya açıklama girebilirsiniz.."></textarea>
+                            <textarea name="irk_özellikleri" class="col-md-12 col-sm-12 col-xs-12" placeholder="İsterseniz buraya ırk özelliklerini girebilirsiniz.."></textarea>
                           </div>  
                         </div>
                         <div class="form-group">
                         <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button type="submit" name="birimekle" class="btn btn-round btn-success">Kaydet</button>
+                          <button type="submit" name="irkeklekoyun" class="btn btn-round btn-success">Kaydet</button>
                         </div>
                       </div>
                     </form>

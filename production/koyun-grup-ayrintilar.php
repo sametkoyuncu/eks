@@ -24,6 +24,8 @@ $sayac = $koyunsorgu->rowCount();
 
 $irksorgu = $db->prepare("SELECT * FROM irk_koyun WHERE irk_id=:id");
 
+$padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE koyun_padok_id=:id");
+
 ?>
 
 <!-- page content -->
@@ -103,7 +105,20 @@ $irksorgu = $db->prepare("SELECT * FROM irk_koyun WHERE irk_id=:id");
                             <tbody>
                               <tr>
                                 <th class="col-md-4">Bulunduğu Bölme:</th>
-                                <td><del>Bölme Adı</del></td>
+                                <td>
+                                  <?php
+                                  $padoksorgu->execute(array(
+                                    'id' => $koyungrupcek['koyun_grup_padokid']
+                                  ));
+                                  $padokcek = $padoksorgu->fetch(PDO::FETCH_ASSOC);
+                                  if (isset($padokcek['koyun_padok_adi'])) {
+                                    echo $padokcek['koyun_padok_adi'];
+                                  } else {
+                                    echo "Padok seçilmemiş..";
+                                  }
+
+                                  ?>
+                                </td>
                               </tr>
                               <tr>
                                 <th>Oluşturma Tarihi:</th>
