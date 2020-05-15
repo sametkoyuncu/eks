@@ -7,9 +7,22 @@ $yemkayitsorgu->execute(array(
 ));
 $sayac = $yemkayitsorgu->rowCount();
 
-$yemsorgu = $db->prepare("SELECT * FROM yem WHERE kullanici_id=:id");
-$yemsorgu->execute(array(
-  'id' => $kullanici_id
+$kesifyemsorgu = $db->prepare("SELECT * FROM yem WHERE kullanici_id=:id and yem_tipi=:tip");
+$kesifyemsorgu->execute(array(
+  'id' => $kullanici_id,
+  'tip' => 1
+));
+
+$kabayemsorgu = $db->prepare("SELECT * FROM yem WHERE kullanici_id=:id and yem_tipi=:tip");
+$kabayemsorgu->execute(array(
+  'id' => $kullanici_id,
+  'tip' => 2
+));
+
+$katkiyemsorgu = $db->prepare("SELECT * FROM yem WHERE kullanici_id=:id and yem_tipi=:tip");
+$katkiyemsorgu->execute(array(
+  'id' => $kullanici_id,
+  'tip' => 3
 ));
 
 
@@ -18,42 +31,18 @@ $yemsorgu->execute(array(
 
 <!-- page content -->
 <div class="right_col" role="main">
-  <!-- top tiles -->
-  <h3>Stoktaki Yemler </h3>
-  <hr>
 
-  <div class="row tile_count">
-
-    <?php while ($yemcek = $yemsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
-      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top">
-          <!--<i class="fa fa-user"></i>--> <?php echo $yemcek['yem_adi']; ?></span>
-        <div class="count"><?php echo $yemcek['yem_miktari']; ?></div>
-        <span class="count_bottom"><i class="green"></i>
-          <?php
-          $birimsorgu = $db->prepare("SELECT * FROM birim WHERE birim_id=:id");
-          $birimsorgu->execute(array(
-            'id' => $yemcek['yem_birimi']
-          ));
-          $birimcek = $birimsorgu->fetch(PDO::FETCH_ASSOC);
-          echo $birimcek['birim_adi'];
-          ?>
-        </span>
-      </div>
-    <?php } ?>
-
-  </div>
-  <!-- /top tiles -->
 
   <div class="">
     <div class="clearfix"></div>
     <div class="row">
+      <!-- üst tablo -->
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Yem Satın Alım Kayıtları</h2>
+            <h2>Yem Stok Durumu </h2>
             <div class=" text-right">
-              <a href="yem-kayit-ekle.php" class="btn btn-round btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Satın Alım Ekle</a>
+              <a href="yem-kayit.php#kayitlar" class="btn btn-round btn-default btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Satın Alım Kayıtları</a>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -73,6 +62,153 @@ $yemsorgu->execute(array(
               </div>
           <?php }
           } ?>
+
+          <div class="x_content">
+            Bu sayfada stokta bulunan yem ve yem katkı maddelerini görüntüleyebilir, satın alım kaydı ekleyebilir veya önceden yapılan alımlarla ilgili kayıtları inceleyebilirsiniz.
+          </div>
+        </div>
+      </div>
+      <!-- üst tablo son -->
+      <!-- üst tablo -->
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Kesif Yemler </h2>
+            <div class=" text-right">
+              <a href="yem-kayit-ekle-kesif-yem.php" class="btn btn-round btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Alım Ekle</a>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <table id="" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th class="">Ad</th>
+                  <th class="">Miktar</th>
+                  <th class="">Birim</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <?php while ($yemcek = $kesifyemsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                  <tr>
+                    <td><?php echo $yemcek['yem_adi']; ?></td>
+                    <td><?php echo $yemcek['yem_miktari']; ?></td>
+                    <td>
+                      <?php
+                      $birimsorgu = $db->prepare("SELECT * FROM birim WHERE birim_id=:id");
+                      $birimsorgu->execute(array(
+                        'id' => $yemcek['yem_birimi']
+                      ));
+                      $birimcek = $birimsorgu->fetch(PDO::FETCH_ASSOC);
+                      echo $birimcek['birim_adi'];
+                      ?>
+                    </td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- üst tablo son -->
+      <!-- üst tablo -->
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Kaba Yemler </h2>
+            <div class=" text-right">
+              <a href="yem-kayit-ekle-kaba-yem.php" class="btn btn-round btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Alım Ekle</a>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <table id="" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th class="">Ad</th>
+                  <th class="">Miktar</th>
+                  <th class="">Birim</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <?php while ($yemcek = $kabayemsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                  <tr>
+                    <td><?php echo $yemcek['yem_adi']; ?></td>
+                    <td><?php echo $yemcek['yem_miktari']; ?></td>
+                    <td>
+                      <?php
+                      $birimsorgu = $db->prepare("SELECT * FROM birim WHERE birim_id=:id");
+                      $birimsorgu->execute(array(
+                        'id' => $yemcek['yem_birimi']
+                      ));
+                      $birimcek = $birimsorgu->fetch(PDO::FETCH_ASSOC);
+                      echo $birimcek['birim_adi'];
+                      ?>
+                    </td>
+
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- üst tablo son -->
+      <!-- üst tablo -->
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Yem Katkı Maddeleri </h2>
+            <div class=" text-right">
+              <a href="yem-kayit-ekle-katki-yem.php" class="btn btn-round btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Alım Ekle</a>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="x_content">
+            <table id="" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th class="">Ad</th>
+                  <th class="">Miktar</th>
+                  <th class="">Birim</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <?php while ($yemcek = $katkiyemsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                  <tr>
+                    <td><?php echo $yemcek['yem_adi']; ?></td>
+                    <td><?php echo $yemcek['yem_miktari']; ?></td>
+                    <td>
+                      <?php
+                      $birimsorgu = $db->prepare("SELECT * FROM birim WHERE birim_id=:id");
+                      $birimsorgu->execute(array(
+                        'id' => $yemcek['yem_birimi']
+                      ));
+                      $birimcek = $birimsorgu->fetch(PDO::FETCH_ASSOC);
+                      echo $birimcek['birim_adi'];
+                      ?>
+                    </td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- üst tablo son -->
+      <div class="col-md-12 col-sm-12 col-xs-12" id="kayitlar">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Yem Satın Alım Kayıtları</h2>
+            <div class=" text-right">
+
+            </div>
+            <div class="clearfix"></div>
+          </div>
 
           <div class="x_content">
             <table id="datatable" class="table table-striped table-bordered">

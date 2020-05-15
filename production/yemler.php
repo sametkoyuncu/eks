@@ -54,6 +54,7 @@
                       <thead>
                         <tr>
                           <th class="">Ad</th>
+                          <th class="">Yem Tipi</th>
                           <th class="col-md-2 col-sm-2 col-xs-12">Depodaki Miktar</th>
                           <th class="">Birim</th>
                           <th class="col-md-2 col-sm-2 col-xs-12"></th>
@@ -65,6 +66,17 @@
                       <?php while ($yemcek=$yemsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
                         <tr>
                           <td><?php echo $yemcek['yem_adi']; ?></td>
+                          <td>
+                            <?php 
+                              if($yemcek['yem_tipi'] == 1){
+                                echo "Kesif Yem";
+                              } elseif($yemcek['yem_tipi'] == 2){ 
+                                echo "Kaba Yem";
+                              } elseif($yemcek['yem_tipi'] == 3){ 
+                                echo "Yem Katkı Maddesi";
+                              }
+                            ?>
+                          </td>
                           <td><?php echo $yemcek['yem_miktari']; ?></td>
                           <td>
                             <?php

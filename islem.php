@@ -733,6 +733,7 @@ if (isset($_POST['yemkayitekle'])) {
 	$yemkayit_birimfiyati = $_POST['yemkayit_birimfiyati'];
 	$yemkayit_aciklama = $_POST['yemkayit_aciklama'];
 	$kullanici_id = $_POST['kullanici_id'];
+	$yemkayit_balyakilo = $_POST['yemkayit_balyakilo'];
 
 	foreach ($yemkayit_adi as $key => $yemkayitAdi) {
 		
@@ -744,10 +745,17 @@ if (isset($_POST['yemkayitekle'])) {
 		));
 		$yemcek = $yemsorgu->fetch(PDO::FETCH_ASSOC);
 
+		#eski veriler
+		$balyakilo = $yemcek['yem_balyakilo']; 
 		$miktar = $yemcek['yem_miktari'];
-		$miktar = $miktar + $yemkayit_miktari[$key];
-		
 
+		#eskiler ile yenilerin ortalması
+		$ortalama_al =  ($balyakilo*$miktar)+($yemkayit_balyakilo[$key]*$yemkayit_miktari[$key]);
+		#yeni miktar
+		$miktar = $miktar + $yemkayit_miktari[$key];
+		#yeni balya kilo
+		$balyakilo = $ortalama_al / $miktar;
+		
 		$toplam_fiyat = $yemkayit_birimfiyati[$key] * $yemkayit_miktari[$key];
 
 		$yemkayitekle = $db->prepare("INSERT INTO yem_kayit SET
@@ -756,6 +764,7 @@ if (isset($_POST['yemkayitekle'])) {
 			yemkayit_miktari=:miktari,
 			yemkayit_fiyati=:fiyati,
 			yemkayit_birimfiyati=:birim_fiyati,
+			yemkayit_balyakilo=:balya_kilo,
 			yemkayit_aciklama=:aciklama
 			");
 		$ekle = $yemkayitekle->execute(array(
@@ -764,16 +773,19 @@ if (isset($_POST['yemkayitekle'])) {
 			'miktari' => $yemkayit_miktari[$key],
 			'fiyati' => $toplam_fiyat,
 			'birim_fiyati' => $yemkayit_birimfiyati[$key],
+			'balya_kilo' => $balyakilo,
 			'aciklama' => $yemkayit_aciklama[$key]
 		));
 		#yem miktarını depoya (yem tablosuna) ekleme
 		
 		$yemguncelle = $db->prepare("UPDATE yem SET
-			yem_miktari=:miktar
+			yem_miktari=:miktar,
+			yem_balyakilo=:balya_kilo
 			WHERE yem_id=:yem_id
 			and kullanici_id=:id");
 		$guncelle = $yemguncelle->execute(array(
 			'miktar' => $miktar,
+			'balya_kilo' => $balyakilo,
 			'yem_id' => $yemkayitAdi,
 			'id' => $kullanici_id
 		));
@@ -848,11 +860,13 @@ if (isset($_POST['yemekle'])) {
 	$hayvanekle = $db->prepare("INSERT INTO yem SET
 			kullanici_id=:id,
 			yem_adi=:adi,
-			yem_birimi=:birimi");
+			yem_birimi=:birimi,
+			yem_tipi=:tipi");
 	$ekle = $hayvanekle->execute(array(
 		'id' => $_POST['kullanici_id'],
 		'adi' => $_POST['yem_adi'],
 		'birimi' => $_POST['yem_birimi'],
+		'tipi' => $_POST['yem_tipi']
 	));
 	if ($ekle) {
 		header("Location:production/yemler.php?durum=true");

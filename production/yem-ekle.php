@@ -61,7 +61,7 @@ $birimsorgu->execute();
               </div>
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Birimi </label>
-                <div class="col-md-2 col-sm-2 col-xs-12">
+                <div class="col-md-3 col-sm-3 col-xs-12">
                   <select class="select2_group form-control" required="required" name="yem_birimi">
                     <option value="">Birim seçiniz..</option>
                     <?php
@@ -73,6 +73,17 @@ $birimsorgu->execute();
                   </select>
                 </div>
                 <a class="btn btn-round btn-default btn-xs" href="birim-ekle.php"><i class="fa fa-plus" aria-hidden="true"></i> Listede yok mu? Yeni ekle..</a>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Yem Tipi </label>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                  <select class="select2_group form-control" required="required" name="yem_tipi">
+                    <option value="">Birim seçiniz..</option>
+                    <option value="1">Kesif Yem</option>
+                    <option value="2">Kaba Yem</option>
+                    <option value="3">Yem Katkı Maddesi</option>
+                  </select>
+                </div>
               </div>
               <div class="form-group">
                 <div align="right" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
