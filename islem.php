@@ -876,28 +876,14 @@ if (isset($_POST['yemekle'])) {
 }
 
 #
-#hayvan ayarı - hayvan güncelle
+#yem ayarı - yem güncelle
 #
 if (isset($_POST['yemguncelle'])) {
 
 	$hayvanguncelle = $db->prepare("UPDATE hayvan SET
 			hayvan_kupeno=:kupeno,
-			hayvan_adi=:adi,
-			hayvan_irk=:irk,
-			hayvan_cinsiyet=:cinsiyet,
-			hayvan_alisfiyati=:alisfiyati,
-			hayvan_satisfiyati=:satisfiyati,
-			hayvan_kilo=:kilo,
-			hayvan_durum=:durum
 			WHERE hayvan_id=:id");
 	$guncelle = $hayvanguncelle->execute(array(
-		'kupeno' => strtoupper($_POST['hayvan_kupeno']),
-		'adi' => $_POST['hayvan_adi'],
-		'irk' => $_POST['hayvan_irk'],
-		'cinsiyet' => $_POST['hayvan_cinsiyet'],
-		'alisfiyati' => $_POST['hayvan_alisfiyati'],
-		'satisfiyati' => $_POST['hayvan_satisfiyati'],
-		'kilo' => $_POST['hayvan_kilo'],
 		'durum' => $_POST['hayvan_durum'],
 		'id' => $_POST['hayvan_id']
 	));
@@ -910,7 +896,7 @@ if (isset($_POST['yemguncelle'])) {
 }
 
 #
-#hayvan ayarı - hayvan sil
+#yem ayarı - yem sil
 #
 if (isset($_GET['yemsil'])) {
 	if ($_GET['yemsil'] == "true") {
@@ -955,23 +941,9 @@ if (isset($_POST['birimekle'])) {
 if (isset($_POST['birimguncelle'])) {
 
 	$hayvanguncelle = $db->prepare("UPDATE hayvan SET
-			hayvan_kupeno=:kupeno,
-			hayvan_adi=:adi,
-			hayvan_irk=:irk,
-			hayvan_cinsiyet=:cinsiyet,
-			hayvan_alisfiyati=:alisfiyati,
-			hayvan_satisfiyati=:satisfiyati,
-			hayvan_kilo=:kilo,
-			hayvan_durum=:durum
+			hayvan_kupeno=:kupeno
 			WHERE hayvan_id=:id");
 	$guncelle = $hayvanguncelle->execute(array(
-		'kupeno' => strtoupper($_POST['hayvan_kupeno']),
-		'adi' => $_POST['hayvan_adi'],
-		'irk' => $_POST['hayvan_irk'],
-		'cinsiyet' => $_POST['hayvan_cinsiyet'],
-		'alisfiyati' => $_POST['hayvan_alisfiyati'],
-		'satisfiyati' => $_POST['hayvan_satisfiyati'],
-		'kilo' => $_POST['hayvan_kilo'],
 		'durum' => $_POST['hayvan_durum'],
 		'id' => $_POST['hayvan_id']
 	));
@@ -1642,11 +1614,13 @@ if (isset($_POST['koyungrupekle'])) {
 			kullanici_id=:id,
 			koyun_grup_adi=:grup_adi,
 			koyun_grup_padokid=:padok_id,
+			koyun_grup_rasyonid=:rasyon_id,
 			koyun_grup_not=:nott");
 	$ekle = $koyungrupekle->execute(array(
 		'id' => $_POST['kullanici_id'],
 		'grup_adi' => $_POST['koyun_grup_adi'],
 		'padok_id' => $_POST['koyun_padok_id'],
+		'rasyon_id' => $_POST['koyun_rasyon_id'],
 		'nott' => $_POST['koyun_grup_not']
 	));
 
@@ -1666,11 +1640,13 @@ if (isset($_POST['koyungrupguncelle'])) {
 	$koyungrupguncelle = $db->prepare("UPDATE koyun_grup SET
 			koyun_grup_adi=:grup_adi,
 			koyun_grup_padokid=:padok_id,
+			koyun_grup_rasyonid=:rasyon_id,
 			koyun_grup_not=:nott
 			WHERE koyun_grup_id=:id");
 	$guncelle = $koyungrupguncelle->execute(array(
 		'grup_adi' => $_POST['koyun_grup_adi'],
 		'padok_id' => $_POST['koyun_padok_id'],
+		'rasyon_id' => $_POST['koyun_rasyon_id'],
 		'nott' => $_POST['koyun_grup_not'],
 		'id' => $koyun_grup_id
 	));
@@ -1816,6 +1792,92 @@ if (isset($_POST['toplukoyunekle'])) {
 			header("Location:production/koyunlar.php?durum=true");
 		} else {
 			header("Location:production/koyunlar.php?durum=false");
+		}
+	}
+}
+####################################################################################
+############					   rasyon  ayarı						############
+####################################################################################
+#
+#rasyon ayarı - rasyon ekle
+#
+if (isset($_POST['rasyonekle'])) {
+
+	$rasyonekle = $db->prepare("INSERT INTO rasyon SET
+			kullanici_id=:id,
+			rasyon_adi=:adi,
+			rasyon_aciklama=:aciklama");
+	$ekle = $rasyonekle->execute(array(
+		'id' => $_POST['kullanici_id'],
+		'adi' => $_POST['rasyon_adi'],
+		'aciklama' => $_POST['rasyon_aciklama']
+	));
+
+	$rasyon_id = $db->lastInsertId();
+	$ekle2= false;
+
+	$yem_id = $_POST['rasyon_yem_id'];
+	$yem_miktari = $_POST['rasyon_yem_miktari'];
+
+	foreach ($yem_id as $key => $id) {
+		$rasyonayemekle = $db->prepare("INSERT INTO rasyon_yem SET
+			kullanici_id=:id,
+			rasyon_id=:rasyon_id,
+			yem_id=:yem_id,
+			yem_miktari=:yem_miktari
+			");
+		$ekle2 = $rasyonayemekle->execute(array(
+			'id' =>$_POST['kullanici_id'],
+			'rasyon_id' => $rasyon_id,
+			'yem_id' => $id,
+			'yem_miktari' => $yem_miktari[$key]			
+		));
+	}
+
+	if ($ekle && $ekle2) {
+		header("Location:production/rasyonlar.php?durum=true");
+	} else {
+		header("Location:production/rasyonlar.php?durum=false");
+	}
+}
+
+#
+#rasyon ayarı - rasyon güncelle
+#
+if (isset($_POST['rasyonguncelle'])) {
+
+	$rasyonguncelle = $db->prepare("UPDATE notlar SET
+			not_baslik = :baslik,
+			not_aciklama = :aciklama
+			WHERE not_id=:id");
+	$guncelle = $rasyonguncelle->execute(array(
+		'baslik' => $_POST['not_baslik'],
+		'aciklama' => $_POST['not_aciklama'],
+		'id' => $_POST['notid']
+	));
+	$notid = $_POST['notid'];
+
+
+	if ($guncelle) {
+		header("Location:production/not-duzenle.php?durum=true&notid=$notid");
+	} else {
+		header("Location:production/not-duzenle.php?durum=false&notid=$notid");
+	}
+}
+
+#
+#rasyon ayarı - rasyon sil
+#
+if (isset($_GET['rasyonsil'])) {
+	if ($_GET['notsil'] == "true") {
+		$rasyonsil = $db->prepare("DELETE FROM notlar WHERE not_id=:id");
+		$sil = $rasyonsil->execute(array(
+			'id' => $_GET['notid']
+		));
+		if ($sil) {
+			header("Location:production/notlar.php?durum=true");
+		} else {
+			header("Location:production/notlar.php?durum=false");
 		}
 	}
 }

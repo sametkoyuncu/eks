@@ -417,6 +417,15 @@ body .container.body .right_col {
 .dark {
     color: #34495E
 }
+.orange {
+    color: #f75a00
+}
+.yellow {
+    color: #f7f300
+}
+.brown{
+    color: #803d22
+}
 .border-blue {
     border-color: #3498DB !important
 }

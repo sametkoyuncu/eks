@@ -7,7 +7,9 @@ $koyungrupsorgu->execute(array(
 ));
 $sayac = $koyungrupsorgu->rowCount();
 
-$padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE koyun_padok_id=:id");
+$padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE kullanici_id=:id and koyun_padok_id=:padok_id");
+
+$rasyonsorgu = $db->prepare("SELECT * FROM rasyon WHERE kullanici_id=:id and rasyon_id=:rasyon_id");
 ?>
 
 <!-- page content -->
@@ -83,12 +85,12 @@ $padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE koyun_padok_id=:id")
                     <td>
                       <?php
                       $padoksorgu->execute(array(
-                        'id' => $koyungrupcek['koyun_grup_padokid']
+                        'id' => $kullanici_id,
+                        'padok_id' => $koyungrupcek['koyun_grup_padokid']
                       ));
                       $padokcek = $padoksorgu->fetch(PDO::FETCH_ASSOC);
                       if(isset($padokcek['koyun_padok_adi'])){echo $padokcek['koyun_padok_adi'];}
                       else {echo "Padok seçilmemiş..";}
-                        
                       ?>
                     </td>
                   </tr>
@@ -102,7 +104,17 @@ $padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE koyun_padok_id=:id")
                   </tr>
                   <tr>
                     <th>Uygulanan Rasyon:</th>
-                    <td><del>Rasyon Adı</del></td>
+                    <td>
+                    <?php
+                      $rasyonsorgu->execute(array(
+                        'id' => $kullanici_id,
+                        'rasyon_id' => $koyungrupcek['koyun_grup_rasyonid']
+                      ));
+                      $rasyoncek = $rasyonsorgu->fetch(PDO::FETCH_ASSOC);
+                      if(isset($rasyoncek['rasyon_adi'])){echo $rasyoncek['rasyon_adi'];}
+                      else {echo "Rasyon seçilmemiş..";}
+                      ?>
+                    </td>
                   </tr>
                   <tr>
                     <th>Notlar:</th>
@@ -111,7 +123,7 @@ $padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE koyun_padok_id=:id")
                 </tbody>
               </table>
               <div class="grup_buton_grup text-center">
-                <a href="koyun-grup-islemler.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-success btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> İşlem Ekle</a>
+                <a href="koyun-grup-islemler.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-success btn-xs disabled" aria-disabled="true"><i class="fa fa-plus" aria-hidden="true"></i> İşlem Ekle</a>
                 <a href="koyun-grup-ayrintilar.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-primary btn-xs"><i class="fa fa-info" aria-hidden="true"></i> Ayrıntılar</a>
                 <a href="koyun-grup-duzenle.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-info btn-xs"><i class="far fa-edit" aria-hidden="true"></i> Düzenle</a>
                 <a href="../islem.php?koyungrupsil=true&koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-danger btn-xs"><i class="far fa-trash-alt" aria-hidden="true"></i> Sil</a>

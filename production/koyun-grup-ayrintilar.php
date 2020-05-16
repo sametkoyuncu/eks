@@ -46,7 +46,7 @@ $padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE koyun_padok_id=:id")
             <h2><span><?php echo "'" . $koyungrupadicek['koyun_grup_adi'] . "' "; ?></span>İsimli Grup Bilgisi</h2>
             <div class=" text-right">
               <a href="koyun-gruplari.php" class="btn btn-round btn-warning btn-sm"><i class="fa fa-chevron-left" aria-hidden="true"></i> Geri Dön</a>
-              <a href="koyun-grup-islemler.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> İşlem Ekle</a>
+              <a href="koyun-grup-islemler.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-success btn-sm disabled" aria-disabled="true"><i class="fa fa-plus" aria-hidden="true"></i> İşlem Ekle</a>
               <a href="koyun-grup-duzenle.php?koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-info btn-sm"><i class="far fa-edit" aria-hidden="true"></i> Düzenle</a>
               <a href="../islem.php?koyungrupsil=true&koyun_grup_id=<?php echo $grup_id; ?>" class="btn btn-round btn-danger btn-sm"><i class="far fa-trash-alt" aria-hidden="true"></i> Sil</a>
             </div>

@@ -41,13 +41,6 @@
           <li><a href="koyun-arsiv.php">Arşiv</a></li>
         </ul>
       </li>
-      <li><a><i class="fa fa-folder-open-o"></i> Ajanda <span class="fa fa-chevron-down"></span></a>
-        <ul class="nav child_menu">
-          <li><a href="notlar.php"> Notlar </a></li>
-          <li><a href="yapilacaklar.php"> Yapılacaklar </a></li>
-          <li><a href="yaklasan-olaylar.php"> Yaklaşan Olaylar </a></li>
-        </ul>
-      </li>
       <li><a><i class="fa fa-archive"></i> Depo <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
           <li><a href="yem-kayit.php">Yem Stoğu</a></li>
@@ -57,12 +50,16 @@
       </li>
       <li><a href="rasyonlar.php"><i class="fa fa-coffee"></i> Rasyonlar </a>
       </li>
-      <!--<li><a href="#"><i class="fa fa-money"></i> Muhasebe </a>
-      </li>-->
+      <li><a><i class="fa fa-folder-open-o"></i> Ajanda <span class="fa fa-chevron-down"></span></a>
+        <ul class="nav child_menu">
+          <li><a href="notlar.php"> Notlar </a></li>
+          <li><a href="yapilacaklar.php"> Yapılacaklar </a></li>
+          <li><a href="yaklasan-olaylar.php"> Yaklaşan Olaylar </a></li>
+        </ul>
+      </li>
       <li><a><i class="fa fa-cogs"></i> Ayarlar <span class="fa fa-chevron-down"></span></a>
         <ul class="nav child_menu">
           <li><a href="yemler.php">Yem Çeşitleri</a></li>
-          <li><a href="birimler.php">Birimler</a></li>
           <li><a href="irklar.php">Irklar</a></li>
         </ul>
       </li>

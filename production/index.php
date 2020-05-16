@@ -250,7 +250,7 @@ $muhasebesorgu->execute(array(
                 <div class="col">
                     <div class="x_panel">
                       <div class="x_title">
-                        <h2>Yaklaşan Olaylar<small><a href="#">Detaylar</a></small></h2>
+                        <h2>Yaklaşan Olaylar<small><a href="yaklasan-olaylar.php">(Tümünü Gör)</a></small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                           <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                           </li>
@@ -327,7 +327,7 @@ $muhasebesorgu->execute(array(
                 <div class="col">
                     <div class="x_panel">
                       <div class="x_title">
-                        <h2>Yapılacaklar <small><a href="#">Bütün Yapılacaklar</a></small></h2>
+                        <h2>Yapılacaklar <small><a href="yapilacaklar.php">(Tümünü Gör)</a></small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                           <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                           </li>
@@ -363,7 +363,7 @@ $muhasebesorgu->execute(array(
                 <div class="col">
                     <div class="x_panel">
                       <div class="x_title">
-                        <h2>Son Notlar <small><a href="notlar.php">Bütün Notlar</a></small></h2>
+                        <h2>Son Notlar <small><a href="notlar.php">(Tümünü Gör)</a></small></h2>
                         <ul class="nav navbar-right panel_toolbox">
                           <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                           </li>

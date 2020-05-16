@@ -49,8 +49,8 @@ $yemsorgu->execute(array(
           <div class="x_content">
             <label class="control-label col-md-12 col-sm-12 col-xs-12" for="first-name">
               <ul>
-                <li>Eklenecek yem listede yok ise <a class="btn btn-round btn-dark btn-xs" href="yemler.php"><i class="fa fa-plus" aria-hidden="true"></i> Buradan yeni yem ekleyebilirsiniz..</a></li>
-                <li>Kaba yemler şimdilik sadece balya olarak kaydedilmektedir. Ama rasyonda kullanılabilmesi için yaklaşık ağırlığı da bilinmesi gerekmektedir. Bu yüzden sizden balyaların ortalama ağırlığı istenmektedir.</li>
+                <li>Eklenecek yem listede yok ise <a class="btn btn-round btn-default btn-xs" href="yemler.php"><i class="fa fa-plus" aria-hidden="true"></i> Buradan yeni yem ekleyebilirsiniz..</a></li>
+                <li>Balya olarak eklenen yemlerin <a class="btn btn-round btn-default btn-xs" href="rasyonlar.php"> Rasyonlar</a> bölümünde düzgün hesaplanabilmesi için balyaların yaklaşık ağırlığının girilmesi gerekmekterdir.</li>
               </ul>
             <hr>
             </label>
@@ -73,10 +73,10 @@ $yemsorgu->execute(array(
                     </select>
                   </div>
 
-                  <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Miktar (balya)
+                  <label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Miktar (balya/kg)
                   </label>
                   <div class="col-md-3 col-sm-3 col-xs-12">
-                    <input type="number" id="first-name" min="0" name="yemkayit_miktari[]" class="form-control" required="required" placeholder="125 balya">
+                    <input type="number" id="first-name" min="0" name="yemkayit_miktari[]" class="form-control" required="required" placeholder="12 balya veya 50 kg gibi">
                   </div>
                 </div>
                 <div class="form-group">
@@ -125,6 +125,7 @@ $yemsorgu->execute(array(
 
     burayaYapistir.appendChild(bunuAL.cloneNode(true));
   }
+  
 </script>
 
 <?php include 'footer.php'; ?>

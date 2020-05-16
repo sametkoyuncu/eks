@@ -8,8 +8,15 @@ $koyungrupsorgu->execute(array(
 ));
 $koyungrupcek = $koyungrupsorgu->fetch(PDO::FETCH_ASSOC);
 
-$padoksorgu = $db->prepare("SELECT * FROM koyun_padok");
-$padoksorgu->execute();
+$padoksorgu = $db->prepare("SELECT * FROM koyun_padok WHERE kullanici_id=:id");
+$padoksorgu->execute(array(
+  'id' => $kullanici_id
+));
+
+$rasyonsorgu = $db->prepare("SELECT * FROM rasyon WHERE kullanici_id=:id");
+$rasyonsorgu->execute(array(
+  'id' => $kullanici_id
+));
 ?>
 
 <!-- page content -->
@@ -69,6 +76,21 @@ $padoksorgu->execute();
                     <?php
                     while ($padokcek = $padoksorgu->fetch(PDO::FETCH_ASSOC)) { ?>
                       <option value="<?php echo $padokcek['koyun_padok_id']; ?>"><?php echo $padokcek['koyun_padok_adi'] . " - " . substr($padokcek['koyun_padok_not'], 0, 50) . ".."; ?></option>
+                    <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Rasyon </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select class="select2_group form-control" name="koyun_rasyon_id">
+                    <option value="<?php echo $koyungrupcek['koyun_grup_rasyonid']; ?>">Rasyon değişmeyecek..</option>
+                    <option value="">Rasyon yok..</option>
+                    <?php
+                    while ($rasyoncek = $rasyonsorgu->fetch(PDO::FETCH_ASSOC)) { ?>
+                      <option value="<?php echo $rasyoncek['rasyon_id']; ?>"><?php echo $rasyoncek['rasyon_adi'] . " - " . substr($rasyoncek['rasyon_aciklama'], 0, 50) . ".."; ?></option>
                     <?php
                     }
                     ?>
