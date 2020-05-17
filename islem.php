@@ -1019,7 +1019,10 @@ if (isset($_POST['irkguncellesigir'])) {
 #ırk ayarı - ırk sil
 #
 if (isset($_GET['irksilsigir'])) {
-	if ($_GET['irksilsigir'] == "true") {
+	if(empty($_SESSION['kullanici_adi'])){
+		header("Location:production/hesap.php?durum=pleaselogin");
+	}
+	elseif ($_GET['irksilsigir'] == "true") {
 		$irksil = $db->prepare("DELETE FROM irk WHERE irk_id=:id");
 		$sil = $irksil->execute(array(
 			'id' => $_GET['irk_id']

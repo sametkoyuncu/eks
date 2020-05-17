@@ -111,13 +111,22 @@
                       <?php echo "Lütfen bilgilerinizi kontrol edip tekrar deneyiniz."; ?>
                       <br>
                       <?php
-                    } ?></p><p style="color: #33CC33;"> <?php if ($_GET['durum']=='exit') { ?>
+                    }
+                    if($_GET['durum']=='pleaselogin') {
+                      ?> <i class="fa fa-exclamation-circle" aria-hidden="true"></i> <br> <?php
+                      echo "Bu işlemi yapabilmek için önce giriş yapmalısınız.." ?> 
+                      <br>
+                      <?php
+                    } ?>
+                  </p>
+                    <p style="color: #33CC33;"> <?php 
+                      if ($_GET['durum']=='exit') { ?>
                         <i class="fa fa-check" aria-hidden="true"></i><br>
                         <?php
                         echo "Başarı ile çıkış yapınız..";
-                    }
-                  }
-                ?></p>
+                      } ?></p>
+                  <?php }
+                ?>
                 <!-- Kayıt bildirimleri -->
                 <p style="color: #33CC33;"><?php 
                   if (isset($_GET['kayit'])) {
