@@ -1,7 +1,6 @@
 <?php 
 
-      include 'header.php'; 
-      include '../../baglan.php';
+      include 'header.php';
 ?>
         <!-- page content -->
         <div class="right_col" role="main">
@@ -58,7 +57,7 @@
 
                   <div class="x_content">
 
-                    <form action="../../islem.php" method="POST" id="demo-form2" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                    <form action="../islem.php" method="POST" id="demo-form2" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
                       <input type="hidden" name="kullanici_id" value="<?php echo $kullanicicek['kullanici_id']; ?>">
 
                         <div class="form-group">

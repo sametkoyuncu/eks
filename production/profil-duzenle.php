@@ -43,7 +43,7 @@
 
                   <div class="x_content">
 
-                    <form action="../../islem.php" method="POST" id="demo-form2" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+                    <form action="../islem.php" method="POST" id="demo-form2" enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
                       <input type="hidden" name="kullanici_id" value="<?php echo $kullanicicek['kullanici_id']; ?>">
                       <!-- Eski görseli silmek için adres gönderiliyor -->
                       <input type="hidden" name="kullanici_gorsel" value="<?php echo $kullanicicek['kullanici_gorsel']; ?>">
@@ -51,7 +51,7 @@
                           <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Profil Görseli 
                           </label>
                           <div class="col-md-7 col-sm-6 col-xs-12">
-                            <img src="../../<?php echo $kullanicicek['kullanici_gorsel'] ?>" style="width: 128px; height: 128px; ">
+                            <img src="<?php echo $kullanicicek['kullanici_gorsel'] ?>" style="width: 128px; height: 128px; ">
                           </div>
                         </div>
                       <div class="form-group">
