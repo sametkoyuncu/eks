@@ -1872,15 +1872,20 @@ if (isset($_POST['rasyonguncelle'])) {
 #rasyon ayarı - rasyon sil
 #
 if (isset($_GET['rasyonsil'])) {
-	if ($_GET['notsil'] == "true") {
-		$rasyonsil = $db->prepare("DELETE FROM notlar WHERE not_id=:id");
+	if ($_GET['rasyonsil'] == "true") {
+		$rasyonsil = $db->prepare("DELETE FROM rasyon WHERE rasyon_id=:id");
 		$sil = $rasyonsil->execute(array(
-			'id' => $_GET['notid']
+			'id' => $_GET['rasyon_id']
 		));
-		if ($sil) {
-			header("Location:production/notlar.php?durum=true");
+
+		$rasyonyemsil = $db->prepare("DELETE FROM rasyon_yem WHERE rasyon_id=:id");
+		$sil2 = $rasyonyemsil->execute(array(
+			'id' => $_GET['rasyon_id']
+		));
+		if ($sil && $sil2) {
+			header("Location:production/rasyonlar.php?durum=true");
 		} else {
-			header("Location:production/notlar.php?durum=false");
+			header("Location:production/rasyonlar.php?durum=false");
 		}
 	}
 }

@@ -214,9 +214,9 @@ $muhasebesorgu->execute(array(
                         <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                          <th class="">Ad</th>
-                          <th class="col-md-2 col-sm-2 col-xs-12">Depodaki Miktar</th>
-                          <th class="">Birim</th>
+                          <th class="">Yem</th>
+                          <th class="col-md-3 col-sm-3 col-xs-12">Depodaki Miktar</th>
+                          <th class="col-md-2 col-sm-2 col-xs-12">Birim</th>
                         </tr>
                       </thead>
 

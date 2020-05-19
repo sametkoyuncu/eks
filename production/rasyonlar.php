@@ -55,7 +55,7 @@
                      <h2><?php echo $rasyoncek['rasyon_adi']; ?></h2>
                      <div class=" text-right">
                        <a href="rasyon-duzenle.php?rasyon_id=<?php echo $rasyon_id; ?>" class="btn btn-round btn-info btn-sm disabled" aria-disabled="true"><i class="far fa-edit" aria-hidden="true"></i> Düzenle</a>
-                       <a href="../islem.php?rasyonsil=true&rasyon_id=<?php echo $rasyon_id; ?>" class="btn btn-round btn-danger btn-sm disabled" aria-disabled="true"><i class="far fa-trash-alt" aria-hidden="true"></i> Sil</a>
+                       <a href="../islem.php?rasyonsil=true&rasyon_id=<?php echo $rasyon_id; ?>" class="btn btn-round btn-danger btn-sm"><i class="far fa-trash-alt" aria-hidden="true"></i> Sil</a>
                      </div>
                      <div class="clearfix"></div>
                    </div>
