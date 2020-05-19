@@ -1,6 +1,5 @@
 <?php 
-      include 'header.php'; 
-      include '../../baglan.php';
+      include 'header.php';
 
       if (isset($_POST['arama'])) {
 
@@ -110,7 +109,7 @@
                                 </td>
                                 <td class="col-md-2  text-right" style="vertical-align: middle;">
                                   <a href="sosyalmedya-duzenle.php?durum=null&sosyalmedya_id=<?php echo $sosyalmedyacek['sosyalmedya_id']; ?>" class="btn btn-round btn-info btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i> Düzenle</a>
-                                  <a href="../../islem.php?sosyalmedyasil=true&sosyalmedya_id=<?php echo $sosyalmedyacek['sosyalmedya_id']; ?>" class="btn btn-round btn-danger btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i> Sil</a>
+                                  <a href="../islem.php?sosyalmedyasil=true&sosyalmedya_id=<?php echo $sosyalmedyacek['sosyalmedya_id']; ?>" class="btn btn-round btn-danger btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i> Sil</a>
                                 </td>
                               </tr>
 

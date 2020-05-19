@@ -1,5 +1,5 @@
 <?php
-	include '../../baglan.php';
+	include '../baglan.php';
 
 	if (isset($_POST['kullanici'])) {
 		$kullanici_adi=$_POST['kullanici'];

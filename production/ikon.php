@@ -1,7 +1,6 @@
 <?php 
 
-      include 'header.php'; 
-      include '../../baglan.php';
+      include 'header.php';
       
       #ayarları veritabanından çekme
       #$sosyalmedyasorgu=$db->prepare("SELECT * FROM sosyal_medya ORDER BY sosyalmedya_sira ASC");

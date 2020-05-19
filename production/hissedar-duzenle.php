@@ -58,7 +58,7 @@
 
                   <div class="x_content">
 
-                      <form action="../../islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                      <form action="../islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                       <input type="hidden" name="kullanici_id" value="<?php echo $kullanici_id ?>">
                       <input type="hidden" name="hisse_id" value="<?php echo $hayvancek['hisse_id']; ?>">
                         

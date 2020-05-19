@@ -113,7 +113,7 @@
                           <td class="col-md-2 col-sm-2"><?php echo $muhasebecek['muhasabe_kayittarihi']; ?></td>
                           <!--<td class="col-md-2 col-sm-2 text-center">
                             <a href="muhasebe-duzenle.php?muhasebe_id=<?php echo $muhasebecek['muhasebe_id']; ?>" class="btn btn-round btn-info btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i> Düzenle</a>
-                            <a href="../../islem.php?muhasebesil=true&muhasebe_id=<?php echo $muhasebecek['muhasebe_id']; ?>" class="btn btn-round btn-danger btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i> Sil</a>
+                            <a href="../islem.php?muhasebesil=true&muhasebe_id=<?php echo $muhasebecek['muhasebe_id']; ?>" class="btn btn-round btn-danger btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i> Sil</a>
                           </td>-->
                         </tr>
                        <?php } ?>

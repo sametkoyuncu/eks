@@ -1,7 +1,6 @@
 <?php
 
 include 'header.php';
-// include '../../baglan.php';
 
 $birimsorgu = $db->prepare("SELECT * FROM birim");
 $birimsorgu->execute();

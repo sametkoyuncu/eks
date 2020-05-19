@@ -1,7 +1,6 @@
 <?php 
 
       include 'header.php'; 
-      include '../../baglan.php';
       #ayarları veritabanından çekme
       /*$hayvansorgu=$db->prepare("SELECT * FROM hayvan WHERE kullanici_id=:id ORDER BY hayvan_kayittarihi ASC");
       $hayvansorgu->execute(array(
@@ -64,7 +63,7 @@
 
                   <div class="x_content">
 
-                    <form action="../../islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <form action="../islem.php" method="POST" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                       <input type="hidden" name="kullanici_id" value="<?php echo $kullanici_id ?>">
                       <div class="form-group">
                            <label class="control-label col-md-2 col-sm-2 col-xs-12">Yem </label>
