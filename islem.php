@@ -8,7 +8,7 @@ include 'baglan.php';
 #
 
 if (isset($_POST['admingiris'])) {
-	$kullanici_adi = $_POST['kullanici_adi'];
+	$kullanici_adi = htmlspecialchars(trim($_POST['kullanici_adi']));
 	$kullanici_sifre = md5($_POST['kullanici_sifre']);
 	$kullanici_yetki = '1';
 
@@ -38,12 +38,12 @@ if (isset($_POST['admingiris'])) {
 #
 
 if (isset($_POST['kullanicigiris'])) {
-	$kullanici_adi = $_POST['kullanici_adi'];
+	$kullanici_adi = htmlspecialchars(trim($_POST['kullanici_adi']));
 	$kullanici_sifre = md5($_POST['kullanici_sifre']);
 	$kullanici_yetki = '2';
 
 	if ($kullanici_adi && $kullanici_sifre) {
-		$kullanicisorgu = $db->prepare("SELECT * FROM kullanici WHERE kullanici_adi=:kullanici and kullanici_sifre=:sifre and kullanici_yetki=:yetki");
+		$kullanicisorgu = $db->prepare("SELECT * FROM kullanici WHERE BINARY kullanici_adi=:kullanici and kullanici_sifre=:sifre and kullanici_yetki=:yetki");
 		$kullanicisorgu->execute(array(
 			'kullanici' => $kullanici_adi,
 			'sifre' => $kullanici_sifre,
@@ -315,7 +315,11 @@ if (isset($_POST['hayvanguncelle'])) {
 #hayvan ayarı - hayvan sil
 #
 if (isset($_GET['hayvansil'])) {
-	if ($_GET['hayvansil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['hayvansil'] == "true") {
 		$hayvansil = $db->prepare("DELETE FROM hayvan WHERE hayvan_id=:id");
 		$sil = $hayvansil->execute(array(
 			'id' => $_GET['hayvan_id']
@@ -432,7 +436,9 @@ if (isset($_POST['buzagiguncelle'])) {
 #buzagi ayarı - buzagi sil
 #
 if (isset($_GET['buzagisil'])) {
-	if ($_GET['buzagisil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['buzagisil'] == "true") {
 		$buzagisil = $db->prepare("DELETE FROM hayvan WHERE hayvan_id=:id");
 		$sil = $buzagisil->execute(array(
 			'id' => $_GET['hayvan_id']
@@ -563,7 +569,9 @@ if (isset($_POST['inektohumguncelle'])) {
 #inek tohum ayarı - inek tohum sil
 #
 if (isset($_GET['inektohumsil'])) {
-	if ($_GET['inektohumsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['inektohumsil'] == "true") {
 		$hayvansil = $db->prepare("DELETE FROM inek_tohum WHERE inek_tohum_id=:id");
 		$sil = $hayvansil->execute(array(
 			'id' => $_GET['inek_tohum_id']
@@ -673,7 +681,9 @@ if (isset($_POST['kurbanlikguncelle'])) {
 #kurbanlık ayarı - kurbanlık sil
 #
 if (isset($_GET['kurbanliksil'])) {
-	if ($_GET['kurbanliksil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['kurbanliksil'] == "true") {
 		// $hayvansil=$db->prepare("DELETE FROM kurbanlik_hayvanlar AND hisse WHERE hayvan_id=:id");
 		//çoklu silme işlemi
 		$hayvansil = $db->prepare("
@@ -736,26 +746,26 @@ if (isset($_POST['yemkayitekle'])) {
 	$yemkayit_balyakilo = $_POST['yemkayit_balyakilo'];
 
 	foreach ($yemkayit_adi as $key => $yemkayitAdi) {
-		
+
 		$yemsorgu = $db->prepare("SELECT * FROM yem WHERE kullanici_id=:id and yem_id=:yem_id");
 		$yemsorgu->execute(array(
-			'id' =>$kullanici_id,
+			'id' => $kullanici_id,
 			'yem_id' => $yemkayitAdi
 			//yem adı gibi gelse de id geliyor
 		));
 		$yemcek = $yemsorgu->fetch(PDO::FETCH_ASSOC);
 
 		#eski veriler
-		$balyakilo = $yemcek['yem_balyakilo']; 
+		$balyakilo = $yemcek['yem_balyakilo'];
 		$miktar = $yemcek['yem_miktari'];
 
 		#eskiler ile yenilerin ortalması
-		$ortalama_al =  ($balyakilo*$miktar)+($yemkayit_balyakilo[$key]*$yemkayit_miktari[$key]);
+		$ortalama_al =  ($balyakilo * $miktar) + ($yemkayit_balyakilo[$key] * $yemkayit_miktari[$key]);
 		#yeni miktar
 		$miktar = $miktar + $yemkayit_miktari[$key];
 		#yeni balya kilo
 		$balyakilo = $ortalama_al / $miktar;
-		
+
 		$toplam_fiyat = $yemkayit_birimfiyati[$key] * $yemkayit_miktari[$key];
 
 		$yemkayitekle = $db->prepare("INSERT INTO yem_kayit SET
@@ -777,7 +787,7 @@ if (isset($_POST['yemkayitekle'])) {
 			'aciklama' => $yemkayit_aciklama[$key]
 		));
 		#yem miktarını depoya (yem tablosuna) ekleme
-		
+
 		$yemguncelle = $db->prepare("UPDATE yem SET
 			yem_miktari=:miktar,
 			yem_balyakilo=:balya_kilo
@@ -789,7 +799,7 @@ if (isset($_POST['yemkayitekle'])) {
 			'yem_id' => $yemkayitAdi,
 			'id' => $kullanici_id
 		));
-		
+
 		if ($ekle && $guncelle) {
 			header("Location:production/yem-kayit.php?durum=true");
 		} else {
@@ -836,7 +846,9 @@ if (isset($_POST['yemkayitguncelle'])) {
 #yemkayit ayarı - yemkayit sil
 #
 if (isset($_GET['yemkayitsil'])) {
-	if ($_GET['yemkayitsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['yemkayitsil'] == "true") {
 		$yemkayitsil = $db->prepare("DELETE FROM yem_kayit WHERE yemkayit_id=:id");
 		$sil = $yemkayitsil->execute(array(
 			'id' => $_GET['yemkayit_id']
@@ -899,7 +911,9 @@ if (isset($_POST['yemguncelle'])) {
 #yem ayarı - yem sil
 #
 if (isset($_GET['yemsil'])) {
-	if ($_GET['yemsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['yemsil'] == "true") {
 		$hayvansil = $db->prepare("DELETE FROM yem WHERE yem_id=:id");
 		$sil = $hayvansil->execute(array(
 			'id' => $_GET['yem_id']
@@ -959,7 +973,9 @@ if (isset($_POST['birimguncelle'])) {
 #birim ayarı - birim sil
 #
 if (isset($_GET['birimsil'])) {
-	if ($_GET['birimsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['birimsil'] == "true") {
 		$hayvansil = $db->prepare("DELETE FROM birim WHERE birim_id=:id");
 		$sil = $hayvansil->execute(array(
 			'id' => $_GET['birim_id']
@@ -1019,10 +1035,9 @@ if (isset($_POST['irkguncellesigir'])) {
 #ırk ayarı - ırk sil
 #
 if (isset($_GET['irksilsigir'])) {
-	if(empty($_SESSION['kullanici_adi'])){
+	if (empty($_SESSION['kullanici_adi'])) {
 		header("Location:production/hesap.php?durum=pleaselogin");
-	}
-	elseif ($_GET['irksilsigir'] == "true") {
+	} elseif ($_GET['irksilsigir'] == "true") {
 		$irksil = $db->prepare("DELETE FROM irk WHERE irk_id=:id");
 		$sil = $irksil->execute(array(
 			'id' => $_GET['irk_id']
@@ -1081,7 +1096,9 @@ if (isset($_POST['irkguncellekoyun'])) {
 #ırk ayarı - ırk sil
 #
 if (isset($_GET['irksilkoyun'])) {
-	if ($_GET['irksilkoyun'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['irksilkoyun'] == "true") {
 		$irksil = $db->prepare("DELETE FROM irk_koyun WHERE irk_id=:id");
 		$sil = $irksil->execute(array(
 			'id' => $_GET['irk_id']
@@ -1125,7 +1142,9 @@ if (isset($_POST['tartimekle'])) {
 #tartim ayarı - tartim sil
 #
 if (isset($_GET['tartimsil'])) {
-	if ($_GET['tartimsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['tartimsil'] == "true") {
 		$tartimsil = $db->prepare("DELETE FROM tartim WHERE tartim_id=:id");
 		$sil = $tartimsil->execute(array(
 			'id' => $_GET['tartim_id']
@@ -1193,7 +1212,9 @@ if (isset($_POST['notguncelle'])) {
 #not ayarı - not sil
 #
 if (isset($_GET['notsil'])) {
-	if ($_GET['notsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['notsil'] == "true") {
 		$notsil = $db->prepare("DELETE FROM notlar WHERE not_id=:id");
 		$sil = $notsil->execute(array(
 			'id' => $_GET['notid']
@@ -1277,7 +1298,9 @@ if (isset($_POST['istamamla'])) {
 #yapılacaklar ayarı - yapılacaklar sil
 #
 if (isset($_GET['issil'])) {
-	if ($_GET['issil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['issil'] == "true") {
 		$issil = $db->prepare("DELETE FROM isler WHERE isler_id=:id");
 		$sil = $issil->execute(array(
 			'id' => $_GET['isler_id']
@@ -1446,7 +1469,9 @@ if (isset($_POST['koyunguncelle'])) {
 #koyun ayarı - koyun sil
 #
 if (isset($_GET['koyunsil'])) {
-	if ($_GET['koyunsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['koyunsil'] == "true") {
 		$koyunsil = $db->prepare("DELETE FROM koyun WHERE koyun_id=:id");
 		$sil = $koyunsil->execute(array(
 			'id' => $_GET['koyun_id']
@@ -1583,7 +1608,9 @@ if (isset($_POST['koyuntohumguncelle'])) {
 #koyun tohum ayarı - koyun tohum sil
 #
 if (isset($_GET['koyuntohumsil'])) {
-	if ($_GET['koyuntohumsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['koyuntohumsil'] == "true") {
 		$koyuntohumsil = $db->prepare("DELETE FROM koyun_tohum WHERE koyun_tohum_id=:id");
 		$sil = $koyuntohumsil->execute(array(
 			'id' => $_GET['koyun_tohum_id']
@@ -1665,7 +1692,9 @@ if (isset($_POST['koyungrupguncelle'])) {
 #koyun grup ayarı - koyun grup sil
 #
 if (isset($_GET['koyungrupsil'])) {
-	if ($_GET['koyungrupsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['koyungrupsil'] == "true") {
 		$koyungrupsil = $db->prepare("DELETE FROM koyun_grup WHERE koyun_grup_id=:id");
 		$sil = $koyungrupsil->execute(array(
 			'id' => $_GET['koyun_grup_id']
@@ -1729,7 +1758,9 @@ if (isset($_POST['koyunpadokguncelle'])) {
 #koyun padok ayarı - koyun padok sil
 #
 if (isset($_GET['koyunpadoksil'])) {
-	if ($_GET['koyunpadoksil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['koyunpadoksil'] == "true") {
 		$koyunpadoksil = $db->prepare("DELETE FROM koyun_padok WHERE koyun_padok_id=:id");
 		$sil = $koyunpadoksil->execute(array(
 			'id' => $_GET['koyun_padok_id']
@@ -1817,7 +1848,7 @@ if (isset($_POST['rasyonekle'])) {
 	));
 
 	$rasyon_id = $db->lastInsertId();
-	$ekle2= false;
+	$ekle2 = false;
 
 	$yem_id = $_POST['rasyon_yem_id'];
 	$yem_miktari = $_POST['rasyon_yem_miktari'];
@@ -1830,10 +1861,10 @@ if (isset($_POST['rasyonekle'])) {
 			yem_miktari=:yem_miktari
 			");
 		$ekle2 = $rasyonayemekle->execute(array(
-			'id' =>$_POST['kullanici_id'],
+			'id' => $_POST['kullanici_id'],
 			'rasyon_id' => $rasyon_id,
 			'yem_id' => $id,
-			'yem_miktari' => $yem_miktari[$key]			
+			'yem_miktari' => $yem_miktari[$key]
 		));
 	}
 
@@ -1872,7 +1903,9 @@ if (isset($_POST['rasyonguncelle'])) {
 #rasyon ayarı - rasyon sil
 #
 if (isset($_GET['rasyonsil'])) {
-	if ($_GET['rasyonsil'] == "true") {
+	if (empty($_SESSION['kullanici_adi'])) {
+		header("Location:production/hesap.php?durum=pleaselogin");
+	} elseif ($_GET['rasyonsil'] == "true") {
 		$rasyonsil = $db->prepare("DELETE FROM rasyon WHERE rasyon_id=:id");
 		$sil = $rasyonsil->execute(array(
 			'id' => $_GET['rasyon_id']

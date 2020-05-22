@@ -1,1 +1,32 @@
+#Etkisizeleman htaccess erişim engelleme
+<Files .htaccess>
+Order Allow,Deny
+Deny from all
+</Files>
+
+#Etkisizeleman dosya listeme engeli
 Options -Indexes
+
+#Etkisizeleman SQL injection engellemek
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} ^(HEAD|TRACE|DELETE|TRACK) [NC,OR] RewriteCond %{HTTP_REFERER} ^(.*)(<|>|’|%0A|%0D|’|<|>|%00).* [NC,OR] RewriteCond %{REQUEST_URI} ^/(,|;|<|>|/{2,999}).* [NC,OR] RewriteCond %{HTTP_USER_AGENT} ^(java|curl|wget).* [NC,OR] RewriteCond %{HTTP_USER_AGENT} ^.*(winhttp|HTTrack|clshttp|archiver|loader|email| harvest|extract|grab|miner).* [NC,OR] RewriteCond %{HTTP_USER_AGENT} ^.*(libwww|curl|wget|python|scan).* [NC,OR] RewriteCond %{HTTP_USER_AGENT} ^.*(<|>|’|%0A|%0D|’|<|>|%00).* [NC,OR] RewriteCond %{HTTP_COOKIE} ^.*(<|>|’|%0A|%0D|’|<|>|%00).* [NC,OR] RewriteCond %{QUERY_STRING} ^.*(localhost|loopback|127\\.0\\.0\\.1).* [NC,OR] RewriteCond %{QUERY_STRING} ^.*(<|>|’|%0A|%0D|’|<|>|%00).* [NC,OR] RewriteCond %{QUERY_STRING} [^a-z](|order|union|declare|char|set|cast|convert|delete |drop|exec|insert|met*|script|select|truncate|upda te)[^a-z] [NC] RewriteRule (.*) - [F]
+
+#Etkisizeleman Xss engellemek
+RewriteEngine On
+RewriteCond %{QUERY_STRING} base64_encode.*\\(.*\\) [OR] RewriteCond %{QUERY_STRING} (\\<|<).*script.*(\\>|>) [NC,OR] RewriteCond %{QUERY_STRING} GLOBALS(=|\\[|\\%[0-9A-Z]{0,2}) [OR] RewriteCond %{QUERY_STRING} _REQUEST(=|\\[|\\%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ index.php|404.php| [F,L]
+
+#Etkisizeleman Scan program engeli
+RewriteEngine On
+<IfModule mod_rewrite.c>
+RewriteCond %{HTTP_USER_AGENT} Acunetix [NC,OR] RewriteCond %{HTTP_USER_AGENT} dirbuster [NC,OR] RewriteCond %{HTTP_USER_AGENT} jbrofuzz [NC,OR] RewriteCond %{HTTP_USER_AGENT} webshag [NC,OR] RewriteCond %{HTTP_USER_AGENT} nikto [NC,OR] RewriteCond %{HTTP_USER_AGENT} SF [OR] RewriteCond %{HTTP_USER_AGENT} sqlmap [NC,OR] RewriteCond %{HTTP_USER_AGENT} fimap [NC,OR] RewriteCond %{HTTP_USER_AGENT} nessus [NC,OR] RewriteCond %{HTTP_USER_AGENT} whatweb [NC,OR] RewriteCond %{HTTP_USER_AGENT} Openvas [NC,OR] RewriteCond %{HTTP:Acunetix-Product} ^WVS
+RewriteRule ^.* http://127.0.0.1/ [R=301,L] </IfModule>
+
+#Etkisizeleman Zararlı örümcekleri engellemek
+RewriteCond %{HTTP_USER_AGENT} ^-?$ [OR] RewriteCond %{HTTP_USER_AGENT} ^[bcdfghjklmnpqrstvwxz\ ]{8,}|^[0-9a-z]{15,}|^[0-9A-Za-z]{19,} [OR] RewriteCond %{HTTP_USER_AGENT} Extractor|almaden|anonymous|autoemailspider|blogsearchbot-martin|CherryPicker|Digger|DirectUpdate|Download\ Accelerator|echo\ extense|Collector|EmailWolf|flashget|frontpage|Go!Zilla|grub\ crawler|HTTPConnect|httplib|HttpProxy|HTTP\ agent|HTTrack|Indy\ Library|Jakarta\ Commons|libWeb|libwww|Microsoft\ Data|Microsoft\ URL|MJ12bot|Movable\ Type|NICErsPRO|NutchCVS|Nutscrape/|OmniExplorer|psycheclone|PussyCat|PycURL|python|QuepasaCreep|SiteMapper|Download|sucker|SurveyBot|Teleport\ Pro|Telesoft|TrackBack|Turing|TurnitinBot|vobsub|webbandit|WebCapture|webcollage|WebCopier|WebDAV|WebEmailExtractor|WebReaper|WEBsaver|WebStripper|WebZIP|widows|Wysigot|Zeus|Zeus.*Webster [NC,OR] RewriteCond %{HTTP_USER_AGENT} ^
+
+#Etkisizeleman log erişim engellemek
+<FilesMatch "(\error.log)">
+Order deny,allow
+Deny from all
+</FilesMatch>

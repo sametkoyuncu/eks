@@ -12,9 +12,12 @@
     ✓ 4- rasyon silerken rasyon_yem tablosundaki verileri de temizle
     5- rasyon grafikler çalışmıyor
     6- rasyona eklenecek yemlere stok kontrolü yapmak gerek
-    7- get işlemlerinde oturum kontrolü yap. direkt if($_SESSION['']){header("giris.php")} olabilir diye umuyorum, tek tek paranteze almaktansa, yağıştır geç. 
+    ✓ 7- get işlemlerinde oturum kontrolü yap. direkt if($_SESSION['']){header("giris.php")} olabilir diye umuyorum, tek tek paranteze almaktansa, yağıştır geç. 
     if(empty($_SESSION['kullanici_adi'])){
 		header("Location:production/hesap.php?durum=pleaselogin");
 	}
 	else..... tam olarak böyle. tabi, biraz daha değişebilir, session tarafı
-    8- htaccess engellemeleri araştır, uygula
+    8- htaccess engellemeleri araştır, uygula - https://www.etkisizeleman.com/nedir/htaccess-guvenlik-ayarlari-nasil-yapilir
+    9- get işlemlerinde session kontrolü var ama sessiondaki kullanici id de kontrol edilmeli, yoksa herhangi bir kullanıcı herhangi bir kaydı silebilir
+    10- SQL injection engelle. halihazırda script çalışıyor 
+    11- yapılacaklar çalışmıyor
